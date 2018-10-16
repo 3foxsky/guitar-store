@@ -19,9 +19,9 @@ app.use(cookieParser());
 
 // ROUTES
 app.use('/api/users', require('./routes/users'));
-
-
-
+app.use('/api/products/brands', require('./routes/brands'));
+app.use('/api/products/woods', require('./routes/woods'));
+app.use('/api/products', require('./routes/products'))
 
 app.listen(port, () => {
   console.log('Running on', port)
