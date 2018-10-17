@@ -127,9 +127,12 @@ class Header extends Component {
     return (
       <header className={'bck_b_light'}
         style={
-          pageYOffset > 120 ? {
-            background: 'black',  
-          } : {}
+          pageYOffset > 110 ? {
+            background: 'black',
+            position: 'fixed',  
+          } : {
+            position: 'static'
+          }
         }
       >
         <div className="container justify-between">

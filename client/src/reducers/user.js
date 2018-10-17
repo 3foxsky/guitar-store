@@ -1,7 +1,7 @@
 import * as T from '../types';
 
 const initialState = {
-
+  isAuth: false,
 };
 
 export default (state = initialState, {type, payload}) => {
