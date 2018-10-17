@@ -11,6 +11,7 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-dropzone": "4.2.12",
+    "react-emotion": "^9.2.12",
     "react-images": "0.5.17",
     "react-moment": "0.7.7",
     "react-paypal-express-checkout": "1.0.4",
@@ -26,7 +27,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint src/**/*.js src/**/*.jsx"
   },
   "proxy": {
     "/api/": {
@@ -34,8 +36,12 @@
     }
   },
   "devDependencies": {
+    "babel-eslint": "^9.0.0",
     "eslint": "^5.7.0",
     "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-react-app": "^3.0.4",
+    "eslint-plugin-emotion": "^9.2.6",
+    "eslint-plugin-flowtype": "^2.50.3",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1"

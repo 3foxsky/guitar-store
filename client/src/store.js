@@ -3,10 +3,7 @@
 import promiseMiddleware from 'redux-promise';
 import ReduxThunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
-
-const rootReducer = () => {
-
-};
+import rootReducer from './reducers';
 
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, ReduxThunk)(createStore);
 
