@@ -1,117 +1,81 @@
 import React, { Component } from 'react';
-import FormField from '../utils/Form/formfield';
-import { update, generateData, isFormValid } from '../utils/Form/formActions';
 import { withRouter } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { loginUser } from '../../actions/user_actions';
+import { withFormik } from 'formik';
 
-class Login extends Component {
+import Input from '../common/Input';
 
-    state = {
-      formError: false,
-      formSuccess:'',
-      formdata:{
-        email: {
-          element: 'input',
-          value: '',
-          config:{
-            name: 'email_input',
-            type: 'email',
-            placeholder: 'Enter your email'
-          },
-          validation:{
-            required: true,
-            email: true
-          },
-          valid: false,
-          touched: false,
-          validationMessage:''
-        },
-        password: {
-          element: 'input',
-          value: '',
-          config:{
-            name: 'password_input',
-            type: 'password',
-            placeholder: 'Enter your password'
-          },
-          validation:{
-            required: true
-          },
-          valid: false,
-          touched: false,
-          validationMessage:''
-        }
-      }
+import { loginUser } from '../../actions/user';
+
+const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+const Login = ({
+
+  //? formik props
+  values,
+  touched,
+  errors,
+  handleChange,
+  handleBlur,
+  handleSubmit,
+}) => {
+  return (
+    <div className="signin_wrapper">
+      <form onSubmit={handleSubmit}>
+        <Input
+          name="email"
+          type="email"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          touched={touched.email}
+          value={values.email}
+          error={errors.email}
+        />
+
+        <Input
+          name="password"
+          type="password"
+          onBlur={handleBlur}
+          onChange={handleChange}
+          touched={touched.password}
+          value={values.password}
+          error={errors.password}
+        />
+        <button type="submit" onClick={handleSubmit}>
+          Log in
+        </button>
+      </form>
+    </div>
+  );
+};
+
+
+const HOC = withFormik({
+  mapPropsToValues: () => ({   
+    email: '',
+    password: '', 
+  }),
+  validate: values => {
+    const errors = {};
+
+    if (!values.name.trim()) {
+      errors.email = 'Required';
+    } else if (re.test(String(values.email).toLowerCase())) {
+      errors.email = 'Email is not valid';
+    }
+    if (!values.password.length < 6){
+      errors.password = 'Password must be at least 6 characters';
     }
 
-    updateForm = (element) => {
-      const newFormdata = update(element,this.state.formdata,'login');
-      this.setState({
-        formError: false,
-        formdata: newFormdata
-      });
-    }
+    return errors;
+  },
 
+  handleSubmit: (values) => {
+    alert(JSON.stringify(values, null, 2));
+  },
 
-    submitForm= (event) =>{
-      event.preventDefault();
-        
-      let dataToSubmit = generateData(this.state.formdata,'login');
-      let formIsValid = isFormValid(this.state.formdata,'login');
+  displayName: 'LoginForm',
+})(Login);
 
-      if(formIsValid){
-        this.props.dispatch(loginUser(dataToSubmit)).then(response =>{
-          if(response.payload.loginSuccess){
-            console.log(response.payload);
-            this.props.history.push('/user/dashboard');
-          }else{
-            this.setState({
-              formError: true
-            });
-          }
-        });
-
-      } else {
-        this.setState({
-          formError: true
-        });
-      }
-    }
-
-
-    render() {
-      return (
-        <div className="signin_wrapper">
-          <form onSubmit={(event)=> this.submitForm(event)}>
-
-            <FormField
-              id={'email'}
-              formdata={this.state.formdata.email}
-              change={(element)=> this.updateForm(element)}
-            />
-
-            <FormField
-              id={'password'}
-              formdata={this.state.formdata.password}
-              change={(element)=> this.updateForm(element)}
-            />
-
-            { this.state.formError ?
-              <div className="error_label">
-                            Please check your data
-              </div>
-              :null}
-            <button onClick={(event)=> this.submitForm(event)}>
-                        Log in
-            </button>
-
-
-          </form>
-        </div>
-      );
-    }
-}
-
-export default connect()(withRouter(Login));
+export default connect()(withRouter(HOC));

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { userLogout } from '../../actions/user';
+import { logoutUser } from '../../actions/user';
 
 class Header extends Component {
   constructor(props) {
@@ -56,7 +56,7 @@ class Header extends Component {
   };
 
   handleLogout = () => {
-    this.props.dispatch(userLogout()).then(response =>{
+    this.props.dispatch(logoutUser()).then(response =>{
       if(response.payload.success){
         this.props.history.push('/');
       }
