@@ -59,22 +59,23 @@ const HOC = withFormik({
   validate: values => {
     const errors = {};
 
-    if (!values.name.trim()) {
+    if (!values.email.trim()) {
       errors.email = 'Required';
-    } else if (re.test(String(values.email).toLowerCase())) {
+    } else if (!re.test(String(values.email).toLowerCase())) {
       errors.email = 'Email is not valid';
     }
-    if (!values.password.length < 6){
+    if (values.password.length < 6){
       errors.password = 'Password must be at least 6 characters';
     }
 
     return errors;
   },
 
-  handleSubmit: (values) => {
+  handleSubmit: (values, {props: {location, history}}) => {  
     alert(JSON.stringify(values, null, 2));
+    history.goBack();
   },
-
+  validateOnChange: false,
   displayName: 'LoginForm',
 })(Login);
 

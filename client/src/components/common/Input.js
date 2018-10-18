@@ -1,9 +1,18 @@
 import React from 'react';
+import cn from 'classnames';
 
-const Input = ({onChange, onBlur, onFocus, type, name, value, placeholder}) => {
+const Input = ({onChange, onBlur, onFocus, type, name, value, placeholder, error, touched}) => {
   return (
     <div class="formBlock">
-      <input 
+      <input
+        className={cn(
+          'border',
+          'border-solid',
+          {
+            'border-grey': !error && !touched,
+            'border-red': error && touched 
+          }
+        )} 
         name={name}
         type={type} 
         onChange={onChange}
@@ -11,7 +20,11 @@ const Input = ({onChange, onBlur, onFocus, type, name, value, placeholder}) => {
         placeholder={placeholder} 
         value={value}
       />
-      <div class="error_label">This field is required</div>
+      {touched && error ?
+        <div class="error_label">{error}</div>
+        :
+        null
+      }
     </div>
   );
 };
