@@ -12,7 +12,7 @@ const Footer = ({data}) => {
     <footer className="bck_b_dark">
       <div className="container">
         <div className="logo">
-            Waves
+            Guitar Store
         </div>
         <div className="wrapper flex sm:flex-col px-10">
           <div className="left flex sm:flex-col">
@@ -64,7 +64,7 @@ const Footer = ({data}) => {
             <h2>Be the first to know</h2>
             <div>
               <div>
-                            Get all the latest information on events, sales and offers.You can miss out.
+                Get all the latest information on events, sales and offers.You can miss out.
               </div>
             </div>
           </div>      

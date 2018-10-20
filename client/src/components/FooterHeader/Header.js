@@ -77,13 +77,11 @@ class Header extends Component {
     );
   }
 
-  
-
   defaultLink = (item,i) => (
     item.name === 'Log out' ?
       <div className="log_out_link"
         key={i}
-        onClick={()=> this.userLogout()}
+        onClick={this.handleLogout}
       >
         {item.name}
       </div>
@@ -92,7 +90,6 @@ class Header extends Component {
         {item.name}
       </Link>
   )
-
 
   showLinks = (type) =>{
     let list = [];
@@ -138,7 +135,7 @@ class Header extends Component {
         <div className="container justify-between">
           <Link to="/">
             <div className="logo">
-              WAVES
+              Guitar Store
             </div>
           </Link>
           <div className="top">

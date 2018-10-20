@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import './css/styles.css';
+import './css/loader.css';
 
 import { store } from './store';
-import App from './App';
+import Router from './router';
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router />
   </Provider>,
   document.getElementById('root'),
 );

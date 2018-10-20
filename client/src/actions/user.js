@@ -8,35 +8,48 @@ export const logoutUser = () => ({
 });
 
 export const loginUser = async (data) => dispatch => {
-
   try {
     const res = axios.post(`${r.users}/login`, data);
-    
+    dispatch({
+      type: T.LOGIN_USER,
+      payload: res
+    });
+    // form promise in login components
+    return {
+      type: T.LOGIN_USER,
+      payload: res
+    };
   } catch (e) {
     console.log(e);
   }
 };
 
 export const registerUser = async (data) => dispatch => {
-
   try {
     const res = axios.post(`${r.users}/register`, data);
-    
   } catch (e) {
     console.log(e);
   }
 };
 
 
-export const auth = () => {
+export const auth = () => async dispatch => {
+  dispatch({type: T.AUTH_START});
+  
+  try {
+    const res = await axios.get(`${r.users}/auth`);
+    dispatch({
+      type: T.AUTH_SUCCESS,
+      payload: res.data
+    });
+  } catch (e) {
+    dispatch({
+      type: T.AUTH_FAILURE,
+      payload: e,
+    });
+  }
 
-  const res = axios.get(`${r.users}/auth`)
-    .then(response => response.data);
 
-  return {
-    type: T.AUTH_USER,
-    payload: res
-  };
 };
 
 const template = () => async dispatch => {
