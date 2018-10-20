@@ -1,21 +1,45 @@
 import React, { Component } from 'react';
 
-class HomeContainer extends Component {
+import Slider from './Slider';
+import Promotion from './Promotion';
+import CardBlock from '../common/CardBlock';
+
+import { connect } from 'react-redux';
+import { getProductsBySell, getProductsByArrival } from '../../actions/products';
+
+class Home extends Component {
+  componentDidMount(){
+    this.props.getProductsByArrival();
+    this.props.getProductsBySell();
+  }
+
   render() {
+    const { bySell, byArrival } = this.props;
     return (
-      <div>
-        {Array(15).fill(1).map((i, idx)=> (
-          <div
-            key={idx}
-            style={{
-              height: '200px',
-              background: 'lightgrey'
-            }}
-          >DIV</div>
-        ))}
-      </div>
+      <React.Fragment>
+        <Slider/>
+        <CardBlock
+          list={bySell}
+          title="Best Selling guitars"
+        />
+        <Promotion/>
+        <CardBlock
+          list={byArrival}
+          title="New arrivals"
+        />
+      </React.Fragment>
     );
   }
 }
 
-export default HomeContainer;
+
+export default connect(
+  ({products}) => ({
+    bySell: products.bySell,
+    byArrival: products.byArrival,
+  }),
+  {
+    getProductsByArrival,
+    getProductsBySell,
+  }
+)(Home);

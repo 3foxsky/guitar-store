@@ -35,7 +35,7 @@ class Header extends Component {
         },
         {
           name:'Log in',
-          linkTo:'/register_login',
+          linkTo:'/login',
           public: true
         },
         {

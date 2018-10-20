@@ -1,9 +1,7 @@
 import React from 'react';
-import Card from './card';
+import Card from './Card';
 
 const CardBlock = (props) => {
-
-
   const renderCards = () =>(
     props.list ?
       props.list.map((card,i)=>(
@@ -14,7 +12,6 @@ const CardBlock = (props) => {
       ))
       :null
   );
-
 
   return (
     <div className="card_block">

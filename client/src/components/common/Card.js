@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import MyButton from './button';
+import Button from './Button';
 
 import { connect } from 'react-redux';
-import { addToCart } from '../../actions/user_actions';
+// import { addToCart } from '../../actions/user';
 
 class Card extends Component {
 
@@ -42,22 +42,23 @@ class Card extends Component {
           }
           <div className="actions">
             <div className="button_wrapp">
-              <MyButton
+              <Button
                 type="default"
                 altClass="card_link"
                 title="View product"
-                linkTo={`/product_detail/${props._id}`}
+                linkTo={`/product-detail/${props._id}`}
                 addStyles={{
                   margin: '10px 0 0 0'
                 }}
               />
             </div>
             <div className="button_wrapp">
-              <MyButton
+              <Button
                 type="bag_link"
                 runAction={()=>{
                   props.user.userData.isAuth ?
-                    this.props.dispatch(addToCart(props._id))
+                    () => {}
+                    //! addToCart();
                     :
                     console.log('you need to log in');
                 }}

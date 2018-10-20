@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from '../utils/card';
+import Card from './Card';
 
 const CardBlockShop = (props) => {
 
@@ -7,8 +7,8 @@ const CardBlockShop = (props) => {
     props.list ? 
       props.list.map(card=>(
         <Card
-          key={card._id}
           {...card}
+          key={card._id}
           grid={props.grid}
         />
       ))
@@ -22,7 +22,7 @@ const CardBlockShop = (props) => {
           {props.list ?
             props.list.length === 0 ?
               <div className="no_result">
-                                Sorry, no results
+                Sorry, no results
               </div>
               :null
             :null}
