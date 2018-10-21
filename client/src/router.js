@@ -10,6 +10,7 @@ import HomeContainer from './components/Home';
 import Login from './components/Auth/index';
 import Register from './components/Auth/Register';
 import NotFound from './components/Utils/NotFound';
+import Shop from './components/Shop';
 
 import Loader from './components/common/Loader';
 
@@ -17,27 +18,29 @@ export default class App extends Component {
   render() {
     return (
       <Router>
-        <React.Fragment>
-          <Header/>
-          <Switch>
-            <AuthRoute path="/profile" component={Profile} privateRoute={true} />
-            {/* <AuthRoute path="/profile/dashboard" privateRoute={true} />
-            <AuthRoute path="/profile/user-profile" privateRoute={true} /> */}
+        <div id="wrapper">
+          <div className="content">
+            <Header/>
+            <Switch>
+              <AuthRoute path="/profile" component={Profile} privateRoute={true} />
+              {/* <AuthRoute path="/profile/dashboard" privateRoute={true} />
+              <AuthRoute path="/profile/user-profile" privateRoute={true} /> */}
 
-            {/* <AuthRoute path="/admin/manage-categories" privateRoute={true} />
-            <AuthRoute path="/admin/add-product" privateRoute={true} />
-            <AuthRoute path="/admin/site-info" privateRoute={true} /> */}
+              {/* <AuthRoute path="/admin/manage-categories" privateRoute={true} />
+              <AuthRoute path="/admin/add-product" privateRoute={true} />
+              <AuthRoute path="/admin/site-info" privateRoute={true} /> */}
 
-            <AuthRoute path="/" exact component={HomeContainer} privateRoute={false} />
-            <AuthRoute path="/login" component={Login} privateRoute={false} />
-            <AuthRoute path="/register" component={Register} privateRoute={false} />
-            <Route path="/loader" component={Loader} />
-            {/* <AuthRoute path="/shop" component={Shop} privateRoute={false} /> */}
-            {/* <AuthRoute path="/product/:id" component={Shop} privateRoute={false} /> */}
-            <AuthRoute component={NotFound} privateRoute={false} />
-          </Switch>
+              <AuthRoute path="/" exact component={HomeContainer} privateRoute={false} />
+              <AuthRoute path="/login" component={Login} privateRoute={false} />
+              <AuthRoute path="/register" component={Register} privateRoute={false} />
+              <Route path="/loader" component={Loader} />
+              <AuthRoute path="/shop" component={Shop} privateRoute={false} />
+              {/* <AuthRoute path="/product/:id" component={Shop} privateRoute={false} /> */}
+              <AuthRoute component={NotFound} privateRoute={false} />
+            </Switch>
+          </div>
           <Footer />
-        </React.Fragment>
+        </div>
       </Router>
     );
   }

@@ -122,7 +122,7 @@ class Header extends Component {
   render() {
     const { pageYOffset, user } = this.state;
     return (
-      <header className={'bck_b_light'}
+      <header className={'bck_b_dark'}
         style={
           pageYOffset > 110 ? {
             background: 'black',

@@ -1,5 +1,5 @@
 import React from 'react';
-import CardBlockShop from '../utils/card_block_shop'; 
+import CardBlockShop from './CardBlockShop'; 
 
 const LoadMore = (props) => {
   return (
@@ -14,7 +14,7 @@ const LoadMore = (props) => {
         props.size > 0 && props.size >= props.limit ?
           <div className="load_more_container">
             <span onClick={()=> props.loadMore()}>
-                            Load More
+              Load More
             </span>
           </div>
           :null

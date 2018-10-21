@@ -5,6 +5,20 @@ body {
     color: #404040;
 }
 
+html, body, #root, #wrapper {
+    height: 100%;
+  }
+  #wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  .content {
+    flex: 1 0 auto;
+  }
+  .footer {
+    flex-shrink: 0;
+  }
+
 .container {
     width:1100px;
     margin: 0 auto;
@@ -251,9 +265,10 @@ header {
 }
 
 header .logo {
-    font-family: 'Monoton', cursive;
+    /* font-family: 'Monoton', cursive; */
+    font-family: 'Julius Sans One', sans-serif;
     color: #ffffff;
-    font-size: 40px;
+    font-size: 30px;
     padding: 11px 0px;
 }
 
@@ -319,7 +334,8 @@ header .log_out_link {
 
 footer .logo {
     text-align: center;
-    font-family: 'Monoton', cursive;
+    /* font-family: 'Monoton', cursive; */
+    font-family: 'Julius Sans One', sans-serif;
     color: #ffffff;
     font-size: 40px;
     padding: 11px 0px;
