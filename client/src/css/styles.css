@@ -201,7 +201,6 @@ select {
     padding: 10px;
     display: table;
     background: #e1ddc3;
-    margin-top: 10px;
 }
 
 .card_link,
@@ -209,7 +208,7 @@ select {
 .add_to_cart_link {
     width: 100%;
     border: 1px solid #dcdcdc;
-    padding: 5px 10px;
+    padding: 10px 10px;
     display: block;
     box-sizing: border-box;
     text-align: center;

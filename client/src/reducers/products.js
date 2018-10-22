@@ -1,7 +1,8 @@
 import * as T from '../types';
 
 const initialState = {
-  products: null, // []
+  isShopLoading: false,
+  toShop: [],
   bySell: [],
   byArrival: []
 };
@@ -40,11 +41,22 @@ export default (state = initialState, {type, payload}) => {
       addWood: payload.success , 
       woods:payload.woods 
     };
-  case T.GET_PRODUCTS_TO_SHOP:
+  case T.GET_PRODUCTS_TO_SHOP_START:
+    return {
+      ...state,
+      isShopLoading: true,
+    };
+  case T.GET_PRODUCTS_TO_SHOP_SUCCESS:
     return {
       ...state,
       toShop: payload.articles,
-      toShopSize: payload.size
+      toShopSize: payload.size,
+      isShopLoading: false,
+    };
+  case T.GET_PRODUCTS_TO_SHOP_FAILURE:
+    return {
+      ...state,
+      isShopLoading: false,
     };
   case T.ADD_PRODUCT:
     return { 
@@ -56,10 +68,16 @@ export default (state = initialState, {type, payload}) => {
       ...state,
       addProduct: payload
     };
-  case T.GET_PRODUCT_DETAIL:
+  case T.GET_PRODUCT_DETAIL_START: 
     return {
       ...state,
-      prodDetail: payload
+      isDetailLoading: true,
+    };
+  case T.GET_PRODUCT_DETAIL_SUCCESS:
+    return {
+      ...state,
+      prodDetail: payload,
+      isDetailLoading: false,
     };
   case T.CLEAR_PRODUCT_DETAIL:
     return {

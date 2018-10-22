@@ -13,8 +13,6 @@ import { frets, price } from './fixedCategories';
 import CollapseCheckbox from './CollapseCheckbox';
 import CollapseRadio from './CollapseRadio';
 
-
-
 class Shop extends Component {
 
   state = {
@@ -30,14 +28,15 @@ class Shop extends Component {
   }
 
   componentDidMount(){
-    getBrands();
-    getWoods();
+    const { getBrands, getWoods, getProductsToShop } = this.props;
 
     getProductsToShop(
       this.state.skip,
       this.state.limit,
       this.state.filters
     );
+    getBrands();
+    getWoods();
   }
 
   handlePrice = (value) => {
@@ -70,24 +69,23 @@ class Shop extends Component {
 
   
   showFilteredResults = (filters) =>{
+    this.setSkip(0);
     this.props.getProductsToShop(
       0,
       this.state.limit,
       filters,
     );
-    this.setSkip(0);
   }
     
-  LoadMore = () => {
+  LoadMore = () => {    
     let skip = this.state.skip + this.state.limit;
-    
+    this.setSkip(skip);
     this.props.getProductsToShop(
       skip,
       this.state.limit,
       this.state.filters,
       this.props.products.toShop,
     );
-    this.setSkip(skip);
   }
       
   handleGrid= () =>{
@@ -103,8 +101,9 @@ class Shop extends Component {
   }     
       
   render() {
-    const products = this.props.products;
+    const { products, isLoading } = this.props;
     return (
+
       <div>
         <div className="page_top">
           <div className="container">
@@ -159,11 +158,12 @@ class Shop extends Component {
               </div>
               <div style={{clear:'both'}}>
                 <LoadMore
+                  isLoading={isLoading}
                   grid={this.state.grid}
                   limit={this.state.limit}
                   size={products.toShopSize}
                   products={products.toShop}
-                  loadMore={()=> this.loadMoreCards()}
+                  loadMore={this.LoadMore}
                 />
               </div>
             </div>
@@ -174,16 +174,10 @@ class Shop extends Component {
   }
 }
 
-
-const mapStateToProps = (state) => {
-  return {
-    products: state.products
-  };
-};
-
 export default connect(
   ({products}) => ({
     products,
+    isLoading: products.isShopLoading,
   }),
   {
     getBrands,

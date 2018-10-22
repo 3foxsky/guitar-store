@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { auth } from '../../actions/user';
 
@@ -16,7 +17,7 @@ class AuthRoute extends Component {
     return (
       <React.Fragment>
         {loading ?
-          <Loader />
+          <Loader/>
           :
           <Route
             {...rest}

@@ -54,7 +54,7 @@ const MyButton = (props) => {
 
 
   return (
-    <div className="my_link">
+    <div className="my_link w-full">
       {buttons()}   
     </div>
   );

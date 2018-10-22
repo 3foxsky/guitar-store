@@ -38,7 +38,6 @@ router.post('/login', (req, res)=> {
 });
 
 router.get('/auth', auth, (req, res) => {
-	console.log(req.user);
 	res.json(
 		{
 			isAdmin: req.user.role === 0 ? false : true,

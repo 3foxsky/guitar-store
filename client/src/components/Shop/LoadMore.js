@@ -1,25 +1,35 @@
 import React from 'react';
+
+import Loader from '../common/Loader';
 import CardBlockShop from './CardBlockShop'; 
 
 const LoadMore = (props) => {
   return (
-    <div>
+    <React.Fragment>
       <div>
-        <CardBlockShop
-          grid={props.grid}
-          list={props.products}
-        />
-      </div>
-      {
-        props.size > 0 && props.size >= props.limit ?
-          <div className="load_more_container">
-            <span onClick={()=> props.loadMore()}>
+        <div>
+          <CardBlockShop
+            grid={props.grid}
+            list={props.products}
+          />
+        </div>
+        {
+          props.size > 0 && props.size >= props.limit ?
+            <div className="load_more_container">
+              <span onClick={props.loadMore}>
               Load More
-            </span>
-          </div>
-          :null
+              </span>
+            </div>
+            :null
+        }
+      </div>
+      {props.isLoading
+        ?
+        <Loader/>
+        :
+        null
       }
-    </div>
+    </React.Fragment>
   );
 };
 

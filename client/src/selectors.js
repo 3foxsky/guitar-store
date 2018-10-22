@@ -1,15 +1,9 @@
 import { createSelector } from 'reselect';
 
-const shopItemsSelector = state => state.shop.items;
-const products = state => state.products;
-
-const subtotalSelector = createSelector(
-  shopItemsSelector,
-  items => items.reduce((acc, item) => acc + item.value, 0)
-);
+const products = state => state.products.toShop;
 
 export const getProductsLength = createSelector(
   products,
-  products => products.length
+  toShop => toShop.length
 );
 

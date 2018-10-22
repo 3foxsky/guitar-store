@@ -82,14 +82,13 @@ const HOC = withFormik({
   },
 
   handleSubmit: ({email, password}, {props, props: {location, history}, setValues}) => {
-    props.dispatch(loginUser({
+    props.loginUser({
       email,
       password
     })
-    )
-      .then( res => {
-        if(res.payload.loginSuccess){
-          console.log(res.payload);
+      .then( data => {
+        console.log(data);
+        if(data && data.success){
           history.goBack();
         }else{
           setValues({
@@ -107,5 +106,8 @@ const HOC = withFormik({
 export default connect(
   ({user}) => ({
     loginSuccess: user.loginSuccess,
-  })
+  }),
+  {
+    loginUser
+  }
 )(withRouter(HOC));

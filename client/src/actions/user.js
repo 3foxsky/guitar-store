@@ -3,22 +3,21 @@ import axios from 'axios';
 import * as T from '../types';
 import r from './routes.config';
 
-export const logoutUser = () => ({
-  type: T.LOGOUT_USER
-});
+export const logoutUser = (history) => {
+  history.push('/');
+  return {
+    type: T.LOGOUT_USER
+  };
+};
 
-export const loginUser = async (data) => dispatch => {
+export const loginUser = (data) => async dispatch => {
   try {
-    const res = axios.post(`${r.users}/login`, data);
+    const res = await axios.post(`${r.users}/login`, data);
     dispatch({
       type: T.LOGIN_USER,
-      payload: res
+      payload: res.data.successs
     });
-    // form promise in login components
-    return {
-      type: T.LOGIN_USER,
-      payload: res
-    };
+    return await res.data;
   } catch (e) {
     console.log(e);
   }
@@ -52,20 +51,16 @@ export const auth = () => async dispatch => {
 
 };
 
-const template = () => async dispatch => {
-  dispatch({type: 'FETCH_PHONES_START'});
+/** ======== CART ============ */
 
-  try {
-    const phones = await axios.post('api/test', {});
-    dispatch({
-      type: 'FETCH_PHONES_SUCCESS',
-      payload: phones
+export const addToCart = (_id) => dispatch => {
+
+  axios.post( `${r.users}/addToCart?productId=${_id}`)
+    .then(res => {
+      dispatch({
+        type: T.ADD_TO_CART_USER,
+        payload: res.data
+      });
     });
-  } catch (e) {
-    dispatch({
-      type: 'FETCH_PHONES_FAILURE',
-      payload: e,
-      error: true,
-    });
-  }
+
 };

@@ -11,6 +11,7 @@ import Login from './components/Auth/index';
 import Register from './components/Auth/Register';
 import NotFound from './components/Utils/NotFound';
 import Shop from './components/Shop';
+import ProductPage from './components/Product';
 
 import Loader from './components/common/Loader';
 
@@ -35,8 +36,9 @@ export default class App extends Component {
               <AuthRoute path="/register" component={Register} privateRoute={false} />
               <Route path="/loader" component={Loader} />
               <AuthRoute path="/shop" component={Shop} privateRoute={false} />
-              {/* <AuthRoute path="/product/:id" component={Shop} privateRoute={false} /> */}
-              <AuthRoute component={NotFound} privateRoute={false} />
+              //! not auth route below
+              <Route path="/product-detail/hui" component={ProductPage} />
+              {/* <AuthRoute component={NotFound} privateRoute={false} /> */}
             </Switch>
           </div>
           <Footer />

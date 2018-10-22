@@ -42,12 +42,17 @@ export default (state = initialState, {type, payload}) => {
 
     //? CART
   case T.ADD_TO_CART_USER:
-    return {...state, userData:{
-      ...state.userData,
-      cart: payload
-    }};
+    return {
+      ...state, 
+      userData:{
+        ...state.userData,
+        cart: payload
+      }};
   case T.GET_CART_ITEMS_USER:
-    return {...state,cartDetail: payload };
+    return {
+      ...state,
+      cartDetail: payload
+    };
   case T.REMOVE_CART_ITEM_USER:
     return {
       ...state,
@@ -70,9 +75,15 @@ export default (state = initialState, {type, payload}) => {
     
   //? PROFILE
   case T.UPDATE_DATA_USER:
-    return {...state,updateUser: payload};
+    return {
+      ...state,
+      updateUser: payload
+    };
   case T.CLEAR_UPDATE_USER_DATA:
-    return {...state,updateUser: payload};
+    return {
+      ...state,
+      updateUser: payload
+    };
   default:
     return state;
   }

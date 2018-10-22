@@ -33,11 +33,13 @@
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.js src/**/*.jsx"
   },
-  "proxy": {
-    "/api/": {
-      "target": "http://localhost:5000"
-    }
-  },
+  "proxy": "http://localhost:5000/api",
+    
+  // "proxy": {
+  //   "/api/": {
+  //     "target": "http://localhost:5000"
+  //   }
+  // },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
     "eslint": "^5.7.0",

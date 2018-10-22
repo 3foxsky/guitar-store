@@ -56,11 +56,7 @@ class Header extends Component {
   };
 
   handleLogout = () => {
-    this.props.dispatch(logoutUser()).then(response =>{
-      if(response.payload.success){
-        this.props.history.push('/');
-      }
-    });
+    this.props.logoutUser(this.props.history);
   }
 
 
@@ -150,5 +146,8 @@ class Header extends Component {
 export default connect(
   ({user}) => ({
     user,
-  })
+  }),
+  {
+    logoutUser
+  }
 )(withRouter(Header));

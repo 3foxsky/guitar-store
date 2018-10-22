@@ -4,31 +4,62 @@ import * as T from '../types';
 import r from './routes.config';
 import { getProductsLength } from '../selectors';
 
-export const loadMore = () => async (dispatch, getState) => {
-  const offset = getProductsLength(getState());
+//! add FAILURE actinos instead of them absence or logs
 
-  dispatch({type: 'LOAD_MORE_START'});
+export const getProductsToShop = (skip, limit, filters =[], previousState = []) => async dispatch => {
+  const settings = {
+    limit,
+    skip,
+    filters
+  };
+  dispatch({type: T.GET_PRODUCTS_TO_SHOP_START});
+
   try {
-    const res = await axios.post(`${r.products}/load-more`, {skip: offset});
+    const res = await axios.post(`${r.products}/shop`, settings);
+    const {data} = await res;
+    console.log(data.articles);
     dispatch({
-      type: 'LOAD_MORE_SUCCESS',
-      payload: res
+      type: T.GET_PRODUCTS_TO_SHOP_SUCCESS,
+      payload: {
+        size: data.size,
+        articles: [
+          ...previousState,
+          ...data.articles
+        ]
+      }
     });
-  } catch (e) {
     
+  } catch (e) {
+    console.log(e);
+    dispatch({
+      type: T.GET_PRODUCTS_TO_SHOP_FAILURE,
+      error: e,
+    });
   }
+
 };
 
-export const getProductDetail = (id) => {
-  const request = axios.get(`${r.products}/articles_by_id?id=${id}&type=single`)
-    .then(response=>{
-      return response.data[0];
-    });
 
-  return {
-    type: T.GET_PRODUCT_DETAIL,
-    payload: request
-  };
+export const getProductDetail = (id, history) => async dispatch => {
+  dispatch({type: T.GET_PRODUCT_DETAIL_START});
+
+  try {
+    const {data} = await axios.get(`${r.products}/articles_by_id?id=${id}&type=single`);
+
+    if (!data || data[0]) {
+      return history.push('/');
+    }
+    dispatch({
+      type: T.GET_PRODUCT_DETAIL_SUCCESS,
+      payload: data[0]
+    });
+  } catch (e) {
+    console.log(e);
+    dispatch({
+      type: T.GET_PRODUCT_DETAIL_FAILURE,
+      error: e
+    });
+  }
 
 };
 
@@ -41,14 +72,12 @@ export const clearProductDetail = () => {
 
 
 export const getProductsBySell = () => dispatch => {
-  //?sortBy=sold&order=desc&limit=100
   axios.get(`${r.products}/articles?sortBy=sold&order=desc&limit=4`)
     .then(({data}) => dispatch({
       type: T.GET_PRODUCTS_BY_SELL,
       payload: data
     })
     )
-    //! SHOULD BE FAILTURE ACTION
     .catch(console.log);
 
 };
@@ -60,37 +89,10 @@ export const getProductsByArrival = () => dispatch => {
       payload: data
     })
     )
-    //! SHOULD BE FAILTURE ACTION
     .catch(console.log);
 };
 
-
-export const getProductsToShop = (skip, limit, filters =[], previousState = [], setSkip) => {
-  const data = {
-    limit,
-    skip,
-    filters
-  };
-
-  const request = axios.post(`${r.products}/shop`,data)
-    .then(response => {
-      let newState = [
-        ...previousState,
-        ...response.data.articles
-      ];
-      return {
-        size: response.data.size,
-        articles: newState
-      };
-    });
-  return {
-    type: T.GET_PRODUCTS_TO_SHOP,
-    payload: request
-  };
-};
-
 export const addProduct = (datatoSubmit) => {
-
   const request = axios.post(`${r.products}/article`,datatoSubmit)
     .then(response => response.data);
 
@@ -113,17 +115,14 @@ export const clearProduct = () => {
 **************************/
 
 
-
-export const getBrands = () => {
-
-  const request = axios.get(`${r.products}/brands`)
-    .then(response => response.data );
-
-  return {
-    type: T.GET_BRANDS,
-    payload: request
-  };
-
+export const getBrands = () => dispatch => {
+  axios.get(`${r.products}/brands`)
+    .then(({data}) => 
+      dispatch({
+        type: T.GET_BRANDS,
+        payload: data
+      })
+    );
 };
 
 export const addBrand = (dataToSubmit, existingBrands) => {
@@ -145,36 +144,25 @@ export const addBrand = (dataToSubmit, existingBrands) => {
 };
 
 
-export const addWood = (dataToSubmit, existingWoods) => {
-  const request = axios.post(`${r.products}/wood`,dataToSubmit)
-    .then(response=>{
-      let woods = [
-        ...existingWoods,
-        response.data.wood
-      ];
-      return {
-        success: response.data.success,
-        woods
-      };
-    });
-  return {
-    type: T.ADD_WOOD,
-    payload: request
-  };
+export const addWood = (dataToSubmit, existingWoods) => dispatch => {
+  axios.post(`${r.products}/wood`,dataToSubmit)
+    .then(response => { 
+      dispatch({
+        type: T.ADD_WOOD,
+        payload: response
+      });
+    }
+    ).catch(console.log);
 };
 
-
-
-export const getWoods = () => {
-  const request = axios.get(`${r.products}/woods`)
-    .then(response => response.data );
-
-  return {
-    type: T.GET_WOODS,
-    payload: request
-  };
+export const getWoods = () => dispatch => {
+  console.log('getWoods wordks');
+  axios.get(`${r.products}/woods`)
+    .then( ({data}) => {
+      dispatch({
+        type: T.GET_WOODS,
+        payload: data
+      });
+    }
+    );
 };
-
-
-
-

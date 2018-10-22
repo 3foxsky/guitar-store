@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
 import Button from './Button';
 
-import { connect } from 'react-redux';
-// import { addToCart } from '../../actions/user';
+import { addToCart } from '../../actions/user';
 
 class Card extends Component {
 
@@ -40,11 +42,11 @@ class Card extends Component {
             </div>
             :null
           }
-          <div className="actions">
-            <div className="button_wrapp">
+          <div className="actions items-center">
+            <div className="button_wrapp w-full">
               <Button
                 type="default"
-                altClass="card_link"
+                altClass="card_link w-full"
                 title="View product"
                 linkTo={`/product-detail/${props._id}`}
                 addStyles={{
@@ -57,10 +59,9 @@ class Card extends Component {
                 type="bag_link"
                 runAction={()=>{
                   props.user.userData.isAuth ?
-                    () => {}
-                    //! addToCart();
+                    props.addToCart(props._id)
                     :
-                    console.log('you need to log in');
+                    props.history.push('/login');
                 }}
               />
             </div>
@@ -77,4 +78,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Card);
+export default connect(
+  ({user}) => ({
+    user,
+  }),
+  {
+    addToCart,
+  }
+)(withRouter(Card));
