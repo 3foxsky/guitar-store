@@ -18,7 +18,7 @@
     "react-moment": "0.7.7",
     "react-paypal-express-checkout": "1.0.4",
     "react-redux": "5.0.7",
-    "react-router-dom": "4.3.1",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
     "react-slick": "0.23.1",
     "redux": "4.0.0",
@@ -33,13 +33,11 @@
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.js src/**/*.jsx"
   },
-  "proxy": "http://localhost:5000/api",
-    
-  // "proxy": {
-  //   "/api/": {
-  //     "target": "http://localhost:5000"
-  //   }
-  // },
+  "proxy": {
+    "/api": {
+      "target": "http://localhost:5000"
+    }
+  },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
     "eslint": "^5.7.0",

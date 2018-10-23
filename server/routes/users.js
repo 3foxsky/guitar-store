@@ -51,7 +51,7 @@ router.get('/auth', auth, (req, res) => {
 	);		
 });
 
-router.put('/logout', auth, (req, res) => {
+router.post('/logout', auth, (req, res) => {
 	User.findOneAndUpdate(
 		{_id: req.user.id},
 		{ token: ''},

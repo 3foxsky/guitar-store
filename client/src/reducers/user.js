@@ -1,7 +1,6 @@
 import * as T from '../types';
 
 const initialState = {
-  isAuth: false,
   loginSucces: false,
   isLoading: false,
 };

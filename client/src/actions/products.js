@@ -17,7 +17,7 @@ export const getProductsToShop = (skip, limit, filters =[], previousState = []) 
   try {
     const res = await axios.post(`${r.products}/shop`, settings);
     const {data} = await res;
-    console.log(data.articles);
+    
     dispatch({
       type: T.GET_PRODUCTS_TO_SHOP_SUCCESS,
       payload: {
@@ -44,11 +44,8 @@ export const getProductDetail = (id, history) => async dispatch => {
   dispatch({type: T.GET_PRODUCT_DETAIL_START});
 
   try {
-    const {data} = await axios.get(`${r.products}/articles_by_id?id=${id}&type=single`);
+    const { data } = await axios.get(`${r.products}/acrticles-by-id?id=${id}&type=single`);
 
-    if (!data || data[0]) {
-      return history.push('/');
-    }
     dispatch({
       type: T.GET_PRODUCT_DETAIL_SUCCESS,
       payload: data[0]

@@ -17,7 +17,7 @@ mongoose.connect(process.env.DB_URI);
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 
 // ROUTES
 app.use('/api/users', require('./routes/users'));

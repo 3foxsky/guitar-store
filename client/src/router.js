@@ -25,6 +25,7 @@ export default class App extends Component {
             <Switch>
               <AuthRoute path="/profile" component={Profile} privateRoute={true} />
               {/* <AuthRoute path="/profile/dashboard" privateRoute={true} />
+               <AuthRoute path="/profile/cart" privateRoute={true} />
               <AuthRoute path="/profile/user-profile" privateRoute={true} /> */}
 
               {/* <AuthRoute path="/admin/manage-categories" privateRoute={true} />
@@ -37,8 +38,8 @@ export default class App extends Component {
               <Route path="/loader" component={Loader} />
               <AuthRoute path="/shop" component={Shop} privateRoute={false} />
               //! not auth route below
-              <Route path="/product-detail/hui" component={ProductPage} />
-              {/* <AuthRoute component={NotFound} privateRoute={false} /> */}
+              <AuthRoute path="/product-detail/:id" exact component={ProductPage} />
+              <AuthRoute component={NotFound} privateRoute={false} />
             </Switch>
           </div>
           <Footer />
@@ -47,18 +48,3 @@ export default class App extends Component {
     );
   }
 }
-
-
-// path="/user/dashboard"
-// path="/user/cart" 
-// path="/user/user_profile"
-// path="/admin/add_product"
-// path="/admin/manage_categories"
-// path="/admin/site_info"
-
-
-// path="/product_detail/:id"
-// path="/register" 
-// path="/register_login" 
-// path="/shop" 
-// path="/" 
