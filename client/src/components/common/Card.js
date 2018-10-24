@@ -57,12 +57,11 @@ class Card extends Component {
             <div className="button_wrapp">
               <Button
                 type="bag_link"
-                runAction={()=>{
-                  props.user.userData.isAuth ?
-                    props.addToCart(props._id)
-                    :
-                    props.history.push('/login');
-                }}
+                onClick={ props.user.userData.isAuth ?
+                  ()=> props.addToCart(props.match.params.id)
+                  :
+                  () => { props.history.push('/login'); }
+                }
               />
             </div>
           </div>
@@ -72,12 +71,6 @@ class Card extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user
-  };
-};
-
 export default connect(
   ({user}) => ({
     user,
@@ -86,3 +79,8 @@ export default connect(
     addToCart,
   }
 )(withRouter(Card));
+
+
+// () => (props.addToCart(props._id))
+// :
+// () => ( props.history.push('/login') )

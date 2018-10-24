@@ -10,43 +10,38 @@ class Header extends Component {
   
     this.state = { 
       pageYOffset: 0,
-      page:[
+      publicLinks:[
         {
-          name:'Home',
-          linkTo:'/',
-          public: true
+          name:'Log in',
+          linkTo:'/login',
+          type: ''
         },
         {
-          name:'Guitars',
-          linkTo:'/shop',
-          public: true
-        }
+          name:'Sing up',
+          linkTo:'/register',
+          type: ''
+        },
       ],
-      user:[
+      privateLinks:[
         {
           name:'My Cart',
           linkTo:'/user/cart',
-          public: false
+          type: 'cartLink'
         },
         {
           name:'My Account',
           linkTo:'/user/dashboard',
-          public: false
-        },
-        {
-          name:'Log in',
-          linkTo:'/login',
-          public: true
+          type: ''
         },
         {
           name:'Log out',
           linkTo:'/user/logout',
-          public: false
+          type: 'logOut'
         },
       ]
     };
   }
-  
+
   componentDidMount = () => {
     window.addEventListener('scroll', () => {
       this.setState({
@@ -56,64 +51,57 @@ class Header extends Component {
   };
 
   handleLogout = () => {
-    this.props.logoutUser(this.props.history);
-  }
-
-
-  cartLink = (item,i) => {
-    const user = this.props.user.userData;
-
-    return (
-      <div className="cart_link" key={i}>
-        <span>{user.cart ? user.cart.length:0}</span>
-        <Link to={item.linkTo}>
-          {item.name}
-        </Link>
-      </div>
-    );
-  }
-
-  defaultLink = (item,i) => (
-    item.name === 'Log out' ?
-      <div className="log_out_link"
-        key={i}
-        onClick={this.handleLogout}
-      >
-        {item.name}
-      </div>
-      :
-      <Link to={item.linkTo} key={i}>
-        {item.name}
-      </Link>
-  )
-
-  showLinks = (type) =>{
-    let list = [];
-
-    if(this.props.user.userData){
-      type.forEach((item)=>{
-        if(!this.props.user.userData.isAuth){
-          if(item.public === true){
-            list.push(item);
-          }
-        } else{
-          if(item.name !== 'Log in'){
-            list.push(item);
-          }
-        }
-      });
+    if (window.confirm('Are you sure, you want Logout?')) {
+      this.props.logoutUser(this.props.history);
     }
-
-    return list.map((item,i)=>{
-      if(item.name !== 'My Cart'){
-        return this.defaultLink(item,i);
-      } else {
-        return this.cartLink(item,i);
-      }
-          
-    });
   }
 
+  renderPrivateLink = (i, idx) => {
+    const { user } = this.props;
+    switch (i.type) {
+    case 'cartLink':
+      return (
+        <div className="cart_link" key={idx}>
+          <span>{user.cart ? user.cart.length:0}</span>
+          <Link to={i.linkTo}>
+            {i.name}
+          </Link>
+        </div>
+      );
+    case 'logOut':
+      return (
+        <div className="log_out_link"
+          key={idx}
+          onClick={this.handleLogout}
+        >
+          {i.name}
+        </div>
+      );
+    default:
+      return (
+        <Link to={i.linkTo} key={idx}>
+          {i.name}
+        </Link>
+      );
+    }
+  }
+
+  get renderLinks () {
+    const { user } = this.props;
+    const { privateLinks, publicLinks } = this.state;
+
+    if (user.userData.isAuth) {
+      return privateLinks.map((i, idx) => (
+        this.renderPrivateLink(i, idx)
+      ));
+    } else {
+      return publicLinks.map((i, idx) => (
+        <Link to={i.linkTo} key={idx}>
+          {i.name}
+        </Link>
+      ));
+    }
+  }
 
   render() {
     const { pageYOffset, user } = this.state;
@@ -134,8 +122,8 @@ class Header extends Component {
               Guitar Store
             </div>
           </Link>
-          <div className="top">
-            {this.showLinks(user)}
+          <div className="top flex items-center text-grey-darker">
+            {this.renderLinks}
           </div>
         </div>
       </header>

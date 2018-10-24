@@ -3,6 +3,9 @@ import * as T from '../types';
 const initialState = {
   loginSucces: false,
   isLoading: false,
+  userData: {
+    isAuth: false
+  },
 };
 
 export default (state = initialState, {type, payload}) => {

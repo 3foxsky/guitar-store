@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import ProdInfo from './ProdInfo';
 import ProdImg from './ProdImg';
+import Loader from '../common/Loader';
 
 import { addToCart } from '../../actions/user';
 import { getProductDetail, clearProductDetail } from '../../actions/products';
@@ -20,11 +21,12 @@ class ProductPage extends Component {
   }
 
 
-  addToCartHandler(id){
+  addToCartHandler = (id) => {
     this.props.dispatch(addToCart(id));
   }
     
   render() {
+    const { match, products, user, history } = this.props;
     return (
       <div>
         <div className="page_top">
@@ -34,23 +36,27 @@ class ProductPage extends Component {
         </div>
         <div className="container">
           {
-            this.props.products.prodDetail ?
+            products.prodDetail ?
               <div className="product_detail_wrapper">
                 <div className="left">
                   <div style={{width:'500px'}}>
                     <ProdImg
-                      detail={this.props.products.prodDetail}
+                      detail={products.prodDetail}
                     />
                   </div>
                 </div>
                 <div className="right">
                   <ProdInfo
-                    addToCart={(id)=> this.addToCartHandler(id)}
-                    detail={this.props.products.prodDetail}
+                    addToCart={ user.userData.isAuth ?
+                      ()=> this.addToCartHandler(match.params.id)
+                      :
+                      () => { history.push('/login'); }
+                    }
+                    detail={products.prodDetail}
                   />
                 </div>
               </div>
-              : 'Loading'
+              : <Loader/>
           }
 
         </div>                
@@ -60,7 +66,8 @@ class ProductPage extends Component {
 }
 
 export default connect(
-  ({products}) => ({
+  ({products, user}) => ({
     products,
-  })
+    user,
+  }),
 )(ProductPage);

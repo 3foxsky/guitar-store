@@ -18,7 +18,7 @@ export const loginUser = (data) => async dispatch => {
     const res = await axios.post(`${r.users}/login`, data);
     dispatch({
       type: T.LOGIN_USER,
-      payload: res.data.successs
+      payload: res.data.success
     });
     return await res.data;
   } catch (e) {
@@ -54,10 +54,16 @@ export const auth = () => async dispatch => {
 
 };
 
-/** ======== CART ============ */
+/* 
+ * ************* ======== CART ============ ***************
+ * ************* ======== CART ============ ***************
+ * ************* ======== CART ============ ***************
+ * ************* ======== CART ============ ***************
+ * ************* ======== CART ============ ***************
+ * ************* ======== CART ============ ***************
+ */
 
 export const addToCart = (_id) => dispatch => {
-
   axios.post( `${r.users}/addToCart?productId=${_id}`)
     .then(res => {
       dispatch({
@@ -70,10 +76,8 @@ export const addToCart = (_id) => dispatch => {
 
 
 export const getCartItems = (cartItems, userCart) => dispatch => {
-
   const request = axios.get(`${r.users}/articles_by_id?id=${cartItems}&type=array`)
     .then(response => {
-   
       userCart.forEach(item=>{
         response.data.forEach((k,i)=>{
           if(item.id === k._id){
@@ -91,10 +95,8 @@ export const getCartItems = (cartItems, userCart) => dispatch => {
 
 
 export function removeCartItem(id){
-
   const request = axios.get(`${r.user}/removeFromCart?_id=${id}`)
     .then(response => {
-
       response.data.cart.forEach(item=>{
         response.data.cartDetail.forEach((k,i)=>{
           if(item.id === k._id){

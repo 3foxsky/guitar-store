@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import Button from '../common/Button';
 
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
@@ -46,9 +47,7 @@ const ProdNfo = (props) => {
       <div className="cart">
         <Button
           type="add_to_cart_link"
-          runAction={()=>{
-            props.addToCart(detail._id);
-          }}
+          onClick={props.addToCart}
         />
       </div>
     </div>
@@ -83,4 +82,4 @@ const ProdNfo = (props) => {
   );
 };
 
-export default ProdNfo;
+export default withRouter(ProdNfo);

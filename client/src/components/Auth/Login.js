@@ -87,9 +87,9 @@ const HOC = withFormik({
       password
     })
       .then( data => {
-        console.log(data);
         if(data && data.success){
-          history.goBack();
+          history.push('/user/dashboard');
+          document.location.reload(true);
         }else{
           setValues({
             email,

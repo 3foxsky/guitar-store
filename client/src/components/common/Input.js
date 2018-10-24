@@ -3,7 +3,7 @@ import cn from 'classnames';
 
 const Input = ({onChange, onBlur, onFocus, type, name, value, placeholder, error, touched}) => {
   return (
-    <div class="formBlock">
+    <div className="formBlock">
       <input
         className={cn(
           'border',
@@ -21,7 +21,7 @@ const Input = ({onChange, onBlur, onFocus, type, name, value, placeholder, error
         value={value}
       />
       {touched && error ?
-        <div class="error_label">{error}</div>
+        <div className="error_label">{error}</div>
         :
         null
       }

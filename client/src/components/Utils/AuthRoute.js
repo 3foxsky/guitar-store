@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { auth } from '../../actions/user';
 
 import Loader from '../common/Loader';
+
 
 class AuthRoute extends Component {
   componentDidMount() {
@@ -22,7 +22,7 @@ class AuthRoute extends Component {
           <Route
             {...rest}
             render={props =>
-              !privateRoute || user.isAuth ? (
+              !privateRoute || user.userData.isAuth ? (
                 <Component {...props} />
               ) : (
                 <Redirect
@@ -39,11 +39,11 @@ class AuthRoute extends Component {
   }
 }
 
-export default connect(
+export default withRouter(connect(
   ({user}) => ({
     loading: user.isLoading,
     user, 
   }),
   {auth}
 )
-(AuthRoute);
+(AuthRoute));

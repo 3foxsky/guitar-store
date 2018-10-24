@@ -5,15 +5,14 @@ import Header from './components/FooterHeader/Header';
 import Footer from './components/FooterHeader/Footer';
 import AuthRoute from './components/Utils/AuthRoute';
 
-import Profile from './components/User/Profile';
 import HomeContainer from './components/Home';
 import Login from './components/Auth/index';
 import Register from './components/Auth/Register';
 import NotFound from './components/Utils/NotFound';
 import Shop from './components/Shop';
 import ProductPage from './components/Product';
-
-import Loader from './components/common/Loader';
+// user
+import User from './components/User';
 
 export default class App extends Component {
   render() {
@@ -23,22 +22,17 @@ export default class App extends Component {
           <div className="content">
             <Header/>
             <Switch>
-              <AuthRoute path="/profile" component={Profile} privateRoute={true} />
-              {/* <AuthRoute path="/profile/dashboard" privateRoute={true} />
-               <AuthRoute path="/profile/cart" privateRoute={true} />
-              <AuthRoute path="/profile/user-profile" privateRoute={true} /> */}
+              <AuthRoute path="/user" component={User} privateRoute={true} />
 
               {/* <AuthRoute path="/admin/manage-categories" privateRoute={true} />
               <AuthRoute path="/admin/add-product" privateRoute={true} />
               <AuthRoute path="/admin/site-info" privateRoute={true} /> */}
 
               <AuthRoute path="/" exact component={HomeContainer} privateRoute={false} />
-              <AuthRoute path="/login" component={Login} privateRoute={false} />
+              <AuthRoute path="/login"  component={Login} privateRoute={false} />
               <AuthRoute path="/register" component={Register} privateRoute={false} />
-              <Route path="/loader" component={Loader} />
               <AuthRoute path="/shop" component={Shop} privateRoute={false} />
-              //! not auth route below
-              <AuthRoute path="/product-detail/:id" exact component={ProductPage} />
+              <AuthRoute path="/product-detail/:id" exact privateRoute={false} component={ProductPage} />
               <AuthRoute component={NotFound} privateRoute={false} />
             </Switch>
           </div>
