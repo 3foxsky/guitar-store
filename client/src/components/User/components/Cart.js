@@ -4,7 +4,7 @@ import CartProducts from './CartProducts';
 import { connect } from 'react-redux';
 import { 
   getCartItems,
-  removeCartItem ,
+  removeFromCart ,
   // onSuccessBuy
 } from '../../../actions/user';
 
@@ -59,7 +59,7 @@ class UserCart extends Component {
 
 
     removeFromCart = (id) => {
-      this.props.dispatch(removeCartItem(id))
+      this.props.dispatch(removeFromCart(id))
         .then(()=>{
           if(this.props.user.cartDetail.length <= 0){
             this.setState({

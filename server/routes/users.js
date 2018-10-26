@@ -62,6 +62,48 @@ router.post('/logout', auth, (req, res) => {
 	);
 });
 
+
+/**
+ * CART ROUTES
+ */
+
+// DELETE OR ADD PRODUCT ON SAME ROUTE
+//? FUTURE FEATURE
+router.put('/updateCart', auth, (req, res) => {
+	User.findOneAndUpdate(
+		{ _id: req.user.id },
+		{ cart: req.body.cart },
+		{ new: true },
+		(err, user) => {
+			if (err) return res.status(500).json({error: true});
+			res.status(200).json({error: false, cart: user.cart});
+		}
+	);
+});
+//? FUTURE FEATURE
+
+router.put('/updateProfile', auth, (req, res) => {
+	User.findOneAndUpdate(
+		{ _id: req.user.id },
+		{ $set: {
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
+			email: req.body.email,
+		} },
+		{ new: true },
+		(err, user) => {
+			if (err) return res.status(500).json({error: true});
+			res.status(200).json({error: false, user});
+		}
+	);
+});
+
+
+// router.put('/addToCart', auth, (req, res) => {
+
+// });
+
+//! addToCart, removeFromCart, updateProfile
+//? successBuy
+
 module.exports = router;
-
-

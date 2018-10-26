@@ -5,10 +5,15 @@ import { connect } from 'react-redux';
 import { auth } from '../../actions/user';
 
 import Loader from '../common/Loader';
+import createHistory from 'history/createBrowserHistory';
 
 
 class AuthRoute extends Component {
   componentDidMount() {
+    const history = createHistory();
+    this.unlisten = this.props.history.listen((location, action) => {
+      this.props.auth();
+    });
     this.props.auth();
   }
   
