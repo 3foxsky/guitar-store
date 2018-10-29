@@ -70,12 +70,12 @@ const HOC = withFormik({
     const errors = {};
 
     if (!values.email.trim()) {
-      errors.email = 'Required';
+      errors.email = 'Can\'t be empty';
     } else if (!re.test(String(values.email).toLowerCase())) {
       errors.email = 'Email is not valid';
     }
-    if (values.password.length < 6){
-      errors.password = 'Password must be at least 6 characters';
+    if (values.password.length < 1){
+      errors.password = 'Can\'t be empty';
     }
 
     return errors;

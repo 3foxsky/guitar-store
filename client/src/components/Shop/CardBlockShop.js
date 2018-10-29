@@ -16,20 +16,15 @@ const CardBlockShop = (props) => {
   );
 
   return (
-    <div className="card_block_shop">
-      <div>
-        <div>
-          {props.list ?
-            props.list.length === 0 ?
-              <div className="no_result">
+    <div className="card_block_shop flex flex-wrap justify-center pt-5 lg:pt-0">
+      {props.list ?
+        props.list.length === 0 ?
+          <div className="no_result">
                 Sorry, no results
-              </div>
-              :null
-            :null}
-          { renderCards(props.list)}
-        </div>
-
-      </div>
+          </div>
+          :null
+        :null}
+      { renderCards(props.list)}
     </div>
   );
 };

@@ -14,11 +14,11 @@ const Footer = ({data}) => {
         <div className="logo">
             Guitar Store
         </div>
-        <div className="wrapper flex sm:flex-col px-10">
-          <div className="left flex sm:flex-col">
-            <h2>Contact information</h2>
-            <div className="business_nfo">
-              <div className="tag">
+        <div className="wrapper flex flex-col pt-10 px-10 sm:p0">
+          <div className="left flex flex-col lg:flex-row">
+            <h2 className="mb-5 text-center lg:mr-10 lg:text-left">Contact information</h2>
+            <div className="business_nfo flex-col md:flex-row">
+              <div className="tag mb-4">
                 <FontAwesomeIcon
                   icon={faCompass}
                   className="icon"
@@ -28,7 +28,7 @@ const Footer = ({data}) => {
                   <div>Lva Tolstogo Scv.</div>
                 </div>
               </div>
-              <div className="tag">
+              <div className="tag mb-4">
                 <FontAwesomeIcon
                   icon={faPhone}
                   className="icon"
@@ -38,7 +38,7 @@ const Footer = ({data}) => {
                   <div>(063)772 27 58</div>
                 </div>
               </div>
-              <div className="tag">
+              <div className="tag mb-4">
                 <FontAwesomeIcon
                   icon={faClock}
                   className="icon"
@@ -48,7 +48,7 @@ const Footer = ({data}) => {
                   <div>8am-8pm</div>
                 </div>
               </div>
-              <div className="tag">
+              <div className="tag mb-4">
                 <FontAwesomeIcon
                   icon={faEnvelope}
                   className="icon"
@@ -60,8 +60,8 @@ const Footer = ({data}) => {
               </div>
             </div>
           </div> 
-          <div className="left">
-            <h2>Be the first to know</h2>
+          <div className="left mt-5 mb-10">
+            <h2 className="mb-2">Be the first to know</h2>
             <div>
               <div>
                 Get all the latest information on events, sales and offers.You can miss out.

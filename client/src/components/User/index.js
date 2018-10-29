@@ -47,8 +47,8 @@ const UserDashboard = ({ user, children, match }) => {
   
   return (
     <div className="container">
-      <div className="user_container">
-        <div className="user_left_nav">
+      <div className="user_container flex-col md:flex-row">
+        <div className="user_left_nav mb-10 md:mr-10 md:mb-0">
           <h2>My account</h2>
           <div className="links">
             { generateLinks(links)}

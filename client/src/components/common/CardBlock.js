@@ -18,12 +18,12 @@ const CardBlock = (props) => {
       <div className="container">
         {
           props.title ?
-            <div className="title">
+            <div className="title text-5xl text-red-light">
               {props.title}
             </div>
             :null
         }
-        <div style={{
+        <div className="justify-center" style={{
           display:'flex',
           flexWrap:'wrap'
         }}>

@@ -126,7 +126,7 @@ class Header extends Component {
           }
         }
       >
-        <div className="container justify-between">
+        <div className="container justify-between px-4">
           <Link to="/">
             <div className="logo">
               Guitar Store

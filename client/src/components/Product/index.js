@@ -28,7 +28,7 @@ class ProductPage extends Component {
   render() {
     const { match, products, user, history } = this.props;
     return (
-      <div>
+      <div className="px-5 md:px-0">
         <div className="page_top">
           <div className="container">
             Product Detail
@@ -37,9 +37,12 @@ class ProductPage extends Component {
         <div className="container">
           {
             products.prodDetail ?
-              <div className="product_detail_wrapper">
+              <div className="product_detail_wrapper flex-col md:flex-row">
                 <div className="left">
-                  <div style={{width:'500px'}}>
+                  <div style={{
+                    maxWidth:'500px',
+                    minWidth: '250px'
+                  }}>
                     <ProdImg
                       detail={products.prodDetail}
                     />

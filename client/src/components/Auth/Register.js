@@ -31,7 +31,7 @@ const Register = ({
     setTimeout(() => {
       history.push('/login');
       clearRegister();
-    }, 2000);
+    }, 2500);
   };
 
   return (
@@ -112,7 +112,7 @@ const Register = ({
                       <div className="dialog_alert">
                         <div className="text-green">Congratulations !!</div>
                         <div>
-                        You will be redirected to the LOGIN in a couple seconds...
+                        You will have to LOGIN then
                         </div>
                       </div>
                     </Dialog>
@@ -137,10 +137,10 @@ const Register = ({
 
 const HOC = withFormik({
   mapPropsToValues: () => ({   
-    email: 'ok@ok.com',
-    password: 'qwe123',
-    confirmPassword: 'qwe123',
-    firstName: 'and',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    firstName: '',
     lastName: '',
     sumbitSuccess: false, 
   }),
@@ -157,8 +157,8 @@ const HOC = withFormik({
     } else if (values.password.length < 6){
       errors.password = 'Password must be at least 6 characters';
     } else if (
-      !values.password && 
-      !values.confirmPassword &&
+      values.password &&
+      values.confirmPassword &&
       values.password !== values.confirmPassword
     ) {
       errors.password = 'Password are not the same';
@@ -166,7 +166,9 @@ const HOC = withFormik({
 
     if (!values.confirmPassword.trim()){
       errors.confirmPassword = 'Field is required';
-    }
+    } else if (values.confirmPassword.length < 6){
+      errors.confirmPassword = 'Password must be at least 6 characters';
+    } 
 
     if (!values.firstName.trim()) {
       errors.firstName = 'Field is required';

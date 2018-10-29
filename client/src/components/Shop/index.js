@@ -104,14 +104,14 @@ class Shop extends Component {
     const { products, isLoading } = this.props;
     return (
 
-      <div>
+      <div className="px-4 lg:px-0">
         <div className="page_top">
           <div className="container">
             Browse Products
           </div>
         </div>
         <div className="container">
-          <div className="shop_wrapper">
+          <div className="shop_wrapper flex-col md:flex-row">
             <div className="left">
               <CollapseCheckbox
                 initState={true}
@@ -140,7 +140,7 @@ class Shop extends Component {
                           
             </div>
             <div className="right">
-              <div className="shop_options">
+              <div className="shop_options d-none lg:d-block">
                 <div className="shop_grids clear">
                   <div
                     className={`grid_btn ${this.state.grid?'':'active'}`}
