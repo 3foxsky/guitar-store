@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
     
 		// req.token = token;
 		// console.log(R.omit(['password', 'role'], user));
-		req.user = R.omit(['password', 'role'], user);
+		req.user = user;
 		next();
 	});
 };

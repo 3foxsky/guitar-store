@@ -12,6 +12,11 @@ class Header extends Component {
       pageYOffset: 0,
       publicLinks:[
         {
+          name: 'Shop',
+          linkTo: '/shop',
+          type: ''
+        },
+        {
           name:'Log in',
           linkTo:'/login',
           type: ''
@@ -31,6 +36,11 @@ class Header extends Component {
         {
           name:'My Account',
           linkTo:'/user/dashboard',
+          type: ''
+        },
+        {
+          name: 'Shop',
+          linkTo: '/shop',
           type: ''
         },
         {
@@ -62,7 +72,7 @@ class Header extends Component {
     case 'cartLink':
       return (
         <div className="cart_link" key={idx}>
-          <span>{user.cart ? user.cart.length:0}</span>
+          <span>{user.userData.cart.length || 0}</span>
           <Link to={i.linkTo}>
             {i.name}
           </Link>

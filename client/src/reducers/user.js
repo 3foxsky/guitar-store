@@ -3,18 +3,41 @@ import * as T from '../types';
 const initialState = {
   loginSucces: false,
   isLoading: false,
+  register: {
+    success: false,
+    error: null,
+    isLoading: false,
+  },
   userData: {
     isAuth: false
   },
+  cartDetail: [],
 };
 
 export default (state = initialState, {type, payload}) => {
   switch(type) {
-  //? SING UP/IN
+  // SING UP/IN
+  case T.REGISTER_USER_START:
+    return {
+      ...state,
+      register: {
+        ...state.register,
+        isLoading: true
+      }
+    };
   case T.REGISTER_USER:
     return {
       ...state,
-      register: payload
+      register: {
+        success: payload.success,
+        error: payload.error,
+        isLoading: false
+      }
+    };
+  case T.CLEAR_REGISTER: 
+    return {
+      ...state,
+      register: initialState.register
     };
   case T.LOGIN_USER:
     return { 
@@ -24,7 +47,7 @@ export default (state = initialState, {type, payload}) => {
   case T.LOGOUT_USER:
     return initialState;
 
-  //? AUTHENTICATION
+  // AUTHENTICATION
   case T.AUTH_START: 
     return {
       ...state,
@@ -42,27 +65,20 @@ export default (state = initialState, {type, payload}) => {
       isLoading: false,
     };
 
-    //? CART
-  case T.ADD_TO_CART_USER:
+    // CART  
+  case T.UPDATE_CART:
     return {
-      ...state, 
+      ...state,
+      cartDetail: payload.cartDetail || [],
       userData:{
         ...state.userData,
-        cart: payload
-      }};
+        cart: payload.cart
+      },
+    };
   case T.GET_CART_ITEMS_USER:
     return {
       ...state,
       cartDetail: payload
-    };
-  case T.REMOVE_CART_ITEM_USER:
-    return {
-      ...state,
-      cartDetail: payload.cartDetail,
-      userData:{
-        ...state.userData,
-        cart: payload.cart
-      }
     };
   case T.ON_SUCCESS_BUY_USER:
     return {
@@ -75,7 +91,7 @@ export default (state = initialState, {type, payload}) => {
       cartDetail: payload.cartDetail
     };
     
-  //? PROFILE
+  // PROFILE
   case T.UPDATE_DATA_USER:
     return {
       ...state,

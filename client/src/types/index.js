@@ -3,6 +3,8 @@ const user = 'user/';
 const products = 'products/';
 
 export const LOGIN_USER = 'LOGIN_USER';
+export const REGISTER_USER_START = 'REGISTER_USER_START';
+export const CLEAR_REGISTER = 'CLEAR_REGISTER';
 export const REGISTER_USER = 'REGISTER_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
 
@@ -10,9 +12,11 @@ export const AUTH_START = 'AUTH_START';
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const AUTH_FAILURE = 'AUTH_FAILURE';
 
-export const ADD_TO_CART_USER = 'ADD_TO_CART_USER';
 export const GET_CART_ITEMS_USER = 'GET_CART_ITEMS_USER';
+export const ADD_TO_CART_USER = 'ADD_TO_CART_USER';
+export const UPDATE_CART = 'UPDATE_CART';
 export const REMOVE_CART_ITEM_USER = 'REMOVE_CART_ITEM_USER';
+
 export const ON_SUCCESS_BUY_USER = 'ON_SUCCESS_BUY_USER';
 export const UPDATE_DATA_USER = 'UPDATE_DATA_USER';
 export const CLEAR_UPDATE_USER_DATA = 'CLEAR_UPDATE_USER_DATA';

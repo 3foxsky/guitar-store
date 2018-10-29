@@ -673,16 +673,24 @@ footer .business_nfo .nfo {
     padding: 20px 30px;
 }
 
-.cart_no_items svg ,
-.cart_success svg {
+.cart_no_items svg {
     font-size: 130px;
     color: #717171;
 }
-.cart_no_items,
+.cart_success svg {
+    font-size: 130px;
+    color: #51d88a;
+}
+.cart_no_items, 
 .cart_success {
     text-align: center;
     font-size: 28px;
+}
+.cart_no_items {
     color: #999592;
+}
+.cart_success {
+    color: #51d88a;
 }
 
 

@@ -1,74 +1,41 @@
 import React, { Component } from 'react';
-import CartProducts from './CartProducts';
-
 import { connect } from 'react-redux';
+import * as R from 'ramda';
+
 import { 
   getCartItems,
   removeFromCart ,
   // onSuccessBuy
 } from '../../../actions/user';
+import { calculateTotal } from '../../../selectors';
 
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faFrown from '@fortawesome/fontawesome-free-solid/faFrown';
 import faSmile from '@fortawesome/fontawesome-free-solid/faSmile';
 
-/// AfbA2-qjz92KhC5IDxvx2UpiIDBmSD7PdlKkZk1-OndNwg7Wc5wVAJKlPWQJcHwioMFz0kn4zOXnbqGW
+import CartProducts from './CartProducts';
 
+/// AfbA2-qjz92KhC5IDxvx2UpiIDBmSD7PdlKkZk1-OndNwg7Wc5wVAJKlPWQJcHwioMFz0kn4zOXnbqGW
 // import Paypal from '../utils/paypal';
 
 class UserCart extends Component {
-
     state = {
-      loading: true,
-      total:0,
-      showTotal: false,
       showSuccess: false,
     }
 
     componentDidMount(){
-      let cartItems = [];
-      let user = this.props.user;
-
-      if(user.userData.cart){
-        if(user.userData.cart.length > 0){
-          user.userData.cart.forEach(item=>{
-            cartItems.push(item.id);
-          });
-          this.props.dispatch(getCartItems(cartItems,user.userData.cart))
-            .then(()=>{
-              if(this.props.user.cartDetail.length > 0){
-                this.calculateTotal(this.props.user.cartDetail);
-              }
-            });
-        }
-      }
+      this.props.getCartItems();
     }
 
-    calculateTotal = (cartDetail) => {
-      let total = 0;
-
-      cartDetail.forEach(item=>{
-        total += parseInt(item.price, 10) * item.quantity;
-      });
-
-      this.setState({
-        total,
-        showTotal: true
-      });
-    }
-
+    // shouldComponentUpdate (nextProps) {
+    //   if (nextProps.cartLength !== this.props.cartLength) {
+    //     return true;
+    //   }
+    //   return false;
+    // }
 
     removeFromCart = (id) => {
-      this.props.dispatch(removeFromCart(id))
-        .then(()=>{
-          if(this.props.user.cartDetail.length <= 0){
-            this.setState({
-              showTotal: false
-            });
-          } else{
-            this.calculateTotal(this.props.user.cartDetail);
-          }
-        });
+      this.props.removeFromCart(id);
     }
 
     showNoItemMessage = () =>(
@@ -80,84 +47,86 @@ class UserCart extends Component {
       </div>
     )
 
-    transactionError = (data) => {
-      console.log('Paypal error');
-    }
-
-    transactionCanceled = () => {
-      console.log('Transaction cancled');
-    }
-
-    transactionSuccess = (data) => {
-      // ! REWRITE TO REDUX
-      // this.props.dispatch(onSuccessBuy({
-      //   cartDetail: this.props.user.cartDetail,
-      //   paymentData: data
-      // })).then(()=>{
-      //   if(this.props.user.successBuy){
-      //     this.setState({
-      //       showTotal: false,
-      //       showSuccess: true
-      //     });
-      //   }
-      // });
-    }
-
     render() {
+      const { cartDetail, isCartEmpty, total } = this.props;
       return (
         <div>
           <h1>My cart</h1>
           <div className="user_cart">
             <CartProducts
-              products={this.props.user}
+              cartDetail={cartDetail}
               type="cart"
               removeItem={this.removeFromCart}
             />
-            { this.state.showTotal ?
+            { !isCartEmpty ?
               <div>
                 <div className="user_cart_sum">
                   <div>
-                    Total amount: $ {this.state.total}
+                    Total amount: {`$${total}`}
                   </div>
                 </div>
               </div>
-                            
-              :
-              this.state.showSuccess ?
-                <div className="cart_success">
-                  <FontAwesomeIcon icon={faSmile}/>
-                  <div>
+              : null
+            }          
+            {this.state.showSuccess ?
+              <div className="cart_success">
+                <FontAwesomeIcon icon={faSmile}/>
+                <div>
                     THANK YOU
-                  </div>
-                  <div>
-                    YOUR ORDER IS NOW COMPLETE
-                  </div>
                 </div>
-                :
-                this.showNoItemMessage()
+                <div>
+                    YOUR ORDER IS NOW COMPLETE
+                </div>
+              </div>
+              : null
             }
+            { isCartEmpty ? this.showNoItemMessage() : null}
           </div>
-          {
-            this.state.showTotal ?
-              <div className="paypal_button_container">
-                {/* <Paypal
+          {!isCartEmpty ?
+            <div className="paypal_button_container">
+              {/* <Paypal
                   toPay={this.state.total}
                   transactionError={(data)=> this.transactionError(data)}
                   transactionCanceled={(data)=> this.transactionCanceled(data)}
                   onSuccess={(data)=> this.transactionSuccess(data)}
                 /> */}
-              </div>
-              :null
-
+            </div>
+            :null
           }
 
         </div>           
       );
     }
+
+    transactionError = (data) => {
+      alert('Paypal error');
+    }
+
+    transactionCanceled = () => {
+      alert('Transaction canceled');
+    }
+
+    transactionSuccess = (data) => {
+      // ! REWRITE TO REDUX
+      // this.props.onSuccessBuy({
+      //   cartDetail: this.props.user.cartDetail,
+      //   paymentData: data
+      // ! show the success smile (success buy true)
+      // })
+      // });
+    }
 }
 
 export default connect(
-  ({user}) => ({
-    user,
-  })
+  (state) => ({
+    isCartEmpty: R.isEmpty(state.user.userData.cart),
+    cartLength: state.user.userData.cart.length,
+    cartDetail: state.user.cartDetail,
+    total: calculateTotal(state)
+  }),
+  {
+    // onSuccessBuy,
+    removeFromCart,
+    getCartItems,    
+  }
 )(UserCart);

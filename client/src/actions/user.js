@@ -27,12 +27,29 @@ export const loginUser = (data) => async dispatch => {
   }
 };
 
-export const registerUser = async (data) => dispatch => {
+export const registerUser = (data) => async dispatch => {
+  dispatch({
+    type: T.REGISTER_USER_START
+  });
+
   try {
-    const res = axios.post(`${r.users}/register`, data);
+    const res = await axios.post(`${r.users}/register`, data);
+    dispatch({
+      type: T.REGISTER_USER,
+      payload: {
+        success: res.data.success,
+        error: res.data.error,
+      }
+    });
   } catch (e) {
     console.log(e);
   }
+};
+
+export const clearRegister = () => dispatch => {
+  dispatch({
+    type: T.CLEAR_REGISTER
+  });
 };
 
 
@@ -99,11 +116,14 @@ export const auth = () => async (dispatch, getStore) => {
 
 
 
-export const getCartItems = (cartItems, userCart) => dispatch => {
-  axios.get(`${r.users}/articles_by_id?id=${cartItems}&type=array`)
+export const getCartItems = () => (dispatch, getStore) => {
+  const cart = getStore().user.userData.cart;
+  const cartItemIds = cart.map( i => i.id);
+
+  axios.get(`${r.products}/acrticles-by-id?id=${cartItemIds}&type=array`)
     .then(res => {
-      userCart.map(item=>{
-        res.data.map((k,i)=>{
+      cart.map(item => {
+        res.data.map((k,i) => {
           if(item.id === k._id){
             res.data[i].quantity = item.quantity;
           }
@@ -118,28 +138,64 @@ export const getCartItems = (cartItems, userCart) => dispatch => {
 };
 
 
-export const addToCart = (id) => async (dispatch, getStore) => {
-  const userData = getStore.user.userData;
-  const isAuth = getStore().user.userData.isAuth;
+export const addToCart = (id) => (dispatch, getStore) => {
+  const cart = R.clone(getStore().user.userData.cart);
+  const { isAuth } = getStore().user.userData;
 
-  axios.put( `${r.users}/updateCart`)
-    .then(res => {
+  // if (isAuth) {
+  const prodIdx = cart.findIndex(i => i.id === id);
+  // cause -1 == true
+  if (!prodIdx) {
+    cart[prodIdx].quantity += 1;
+  } else {
+    cart.push({
+      id,
+      quantity: 1,
+      date: new Date().getTime(),
+    });
+  }
+  axios.put(`${r.users}/updateCart`, cart)
+    .then(res => {    
       dispatch({
-        type: T.ADD_TO_CART_USER,
+        type: T.UPDATE_CART,
         payload: res.data
       });
     });
+
+  //  else {
+  //   const cart = await JSON.parse(localStorage.getItem('cart'));
+  //   const prodIdx = R.findIndex(R.propEq('id', id))(cart);
+  //   if (prodIdx){
+  //     cart[prodIdx].quantity += 1;
+  //   } else {
+  //     cart.push({
+  //       id,
+  //       quantity: 1,
+  //       date: new Date().getTime(),
+  //     });
+  //   }
+  //   localStorage.setItem('cart', JSON.stringify(cart));
+  // }
 };
 
+
 export const removeFromCart = (id) => async (dispatch, getStore) => {
-  const userData = getStore.user.userData;
-  const isAuth = getStore().user.userData.isAuth;
+  const user = R.clone(getStore().user);
+  let cartDetail = R.clone(user.cartDetail);
+  let cart = R.clone(user.userData.cart);
+  const { isAuth } = getStore().user.userData;
   // if (isAuth) {
-  axios.put(`${r.user}/updateCart`)
+  cart = cart.filter(i => i.id !== id);
+  cartDetail = cartDetail.filter(i => i._id !== id);
+
+  axios.put(`${r.users}/updateCart`, cart)
     .then( res => {
       dispatch({
-        type: T.REMOVE_CART_ITEM_USER,
-        payload: res.data
+        type: T.UPDATE_CART,
+        payload: {
+          cart: res.data.cart,
+          cartDetail
+        }
       });
     });
   // } else {
@@ -157,7 +213,7 @@ export const removeFromCart = (id) => async (dispatch, getStore) => {
 };
 
 
-
+//* Paypal payment
 // export function onSuccessBuy(data){ 
 //   const request = axios.post(`${r.user}/successBuy`,data)
 //     .then(response => response.data);
@@ -167,7 +223,9 @@ export const removeFromCart = (id) => async (dispatch, getStore) => {
 //     payload: request
 //   };
 // }
+//* Paypal payment
 
+//* update user profile
 // export function updateUserData(dataToSubmit){
 //   const request = axios.post(`${r.user}/update_profile`,dataToSubmit)
 //     .then(response => {
@@ -186,3 +244,4 @@ export const removeFromCart = (id) => async (dispatch, getStore) => {
 //     payload: ''
 //   };
 // }
+//* update user profile

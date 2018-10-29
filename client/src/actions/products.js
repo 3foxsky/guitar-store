@@ -153,7 +153,6 @@ export const addWood = (dataToSubmit, existingWoods) => dispatch => {
 };
 
 export const getWoods = () => dispatch => {
-  console.log('getWoods wordks');
   axios.get(`${r.products}/woods`)
     .then( ({data}) => {
       dispatch({

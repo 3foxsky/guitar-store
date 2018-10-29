@@ -16,7 +16,6 @@ class Card extends Component {
     }
   }
 
-
   render() {
     const props = this.props;
     return (
@@ -58,7 +57,7 @@ class Card extends Component {
               <Button
                 type="bag_link"
                 onClick={ props.user.userData.isAuth ?
-                  ()=> props.addToCart(props.match.params.id)
+                  ()=> { props.addToCart(props._id); }
                   :
                   () => { props.history.push('/login'); }
                 }

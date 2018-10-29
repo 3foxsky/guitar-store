@@ -2,15 +2,23 @@ import React, { Component } from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import { withFormik } from 'formik';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import Input from '../common/Input';
+import Loader from '../common/Loader';
 
-import { userRegister } from '../../actions/user';
+import { registerUser, clearRegister } from '../../actions/user';
 
 const re = 
 /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const Register = ({
+  history,
+  isLoading,
+  error,
+  registerSuccess,
+  // func
+  clearRegister,
   //? formik props
   values,
   touched,
@@ -19,10 +27,17 @@ const Register = ({
   handleBlur,
   handleSubmit,
 }) => {
+  const redirectToLogin = () => {
+    setTimeout(() => {
+      history.push('/login');
+      clearRegister();
+    }, 2000);
+  };
+
   return (
     <div className="page_wrapper">
       <div className="container">
-        <div className="register_login_container">
+        <div className="register_login_container flex-col">
           <div className="left">
             <form onSubmit={handleSubmit}>
               <h2>Personal information</h2>
@@ -90,37 +105,42 @@ const Register = ({
                 </div>
               </div>
               <div>
-                {/* { this.state.formError ?
+                { registerSuccess && !isLoading ? 
+                  <React.Fragment>
+                    {redirectToLogin()}
+                    <Dialog open={true}>
+                      <div className="dialog_alert">
+                        <div className="text-green">Congratulations !!</div>
+                        <div>
+                        You will be redirected to the LOGIN in a couple seconds...
+                        </div>
+                      </div>
+                    </Dialog>
+                  </React.Fragment>
+                  : 
                   <div className="error_label">
-                                        Please check your data
+                    {error}
                   </div>
-                  :null} */}
-                <button onClick={handleSubmit}>
+                }  
+                <button onClick={handleSubmit} type="submit">
                   Create an account
                 </button>
               </div>
             </form>
           </div>
+          { isLoading ? <Loader/> : null }  
         </div>
-      </div>     
-      <Dialog open={values.sumbitSuccess}>
-        <div className="dialog_alert">
-          <div>Congratulations !!</div>
-          <div>
-            You will be redirected to the LOGIN in a couple seconds...
-          </div>
-        </div>
-      </Dialog>
+      </div>
     </div>
   );
 };
 
 const HOC = withFormik({
   mapPropsToValues: () => ({   
-    email: '',
-    password: '',
-    confirmPassword: '',
-    firstName: '',
+    email: 'ok@ok.com',
+    password: 'qwe123',
+    confirmPassword: 'qwe123',
+    firstName: 'and',
     lastName: '',
     sumbitSuccess: false, 
   }),
@@ -136,11 +156,15 @@ const HOC = withFormik({
       errors.password = 'Field is required';
     } else if (values.password.length < 6){
       errors.password = 'Password must be at least 6 characters';
-    } else if (values.password !== values.confirmPassword) {
+    } else if (
+      !values.password && 
+      !values.confirmPassword &&
+      values.password !== values.confirmPassword
+    ) {
       errors.password = 'Password are not the same';
     }
 
-    if (!values.confirmPassword.length){
+    if (!values.confirmPassword.trim()){
       errors.confirmPassword = 'Field is required';
     }
 
@@ -155,12 +179,21 @@ const HOC = withFormik({
     return errors;
   },
 
-  handleSubmit: (values, {props: {location, history}}) => {  
-    // alert(JSON.stringify(values, null, 2));
-    history.push('/login');
+  handleSubmit: (values, {props: {location, history, registerUser, isLoading}, setValues}) => {
+    registerUser(values); 
   },
   validateOnChange: false,
   displayName: 'RegisterForm',
 })(Register);
 
-export default connect()(HOC);
+export default connect(
+  ({user}) => ({
+    registerSuccess: user.register.success,
+    error: user.register.error,
+    isLoading: user.register.isLoading,
+  }),
+  {
+    registerUser,
+    clearRegister,
+  }
+)(HOC);

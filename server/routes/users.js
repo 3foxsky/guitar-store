@@ -11,10 +11,11 @@ router.get('/', (req, res)=> {
 router.post('/register', (req, res)=> {
 	const user = new User(req.body);
 	user.save((err, doc)=>{
-		if(err) return res.json({success:false,err});
+		if(err) return res.status(200).json({success:false, error: 'Can\'t register with this data'});
 
 		return res.status(200).json({
-			success: true
+			success: true,
+			error: null,
 		});
 	});
 });
@@ -53,7 +54,7 @@ router.get('/auth', auth, (req, res) => {
 
 router.post('/logout', auth, (req, res) => {
 	User.findOneAndUpdate(
-		{_id: req.user.id},
+		{_id: req.user._id},
 		{ token: ''},
 		(err, user) => {
 			if (err) return res.status(500).json({success: false, error: true});
@@ -71,8 +72,8 @@ router.post('/logout', auth, (req, res) => {
 //? FUTURE FEATURE
 router.put('/updateCart', auth, (req, res) => {
 	User.findOneAndUpdate(
-		{ _id: req.user.id },
-		{ cart: req.body.cart },
+		{ _id: req.user._id },
+		{ cart: req.body },
 		{ new: true },
 		(err, user) => {
 			if (err) return res.status(500).json({error: true});
@@ -84,7 +85,7 @@ router.put('/updateCart', auth, (req, res) => {
 
 router.put('/updateProfile', auth, (req, res) => {
 	User.findOneAndUpdate(
-		{ _id: req.user.id },
+		{ _id: req.user._id },
 		{ $set: {
 			firstName: req.body.firstName,
 			lastName: req.body.lastName,

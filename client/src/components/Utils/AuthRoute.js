@@ -9,6 +9,10 @@ import createHistory from 'history/createBrowserHistory';
 
 
 class AuthRoute extends Component {
+  state = {
+    from: ''
+  }
+
   componentDidMount() {
     const history = createHistory();
     this.unlisten = this.props.history.listen((location, action) => {

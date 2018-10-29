@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UserProductBlock = ({products, removeItem}) => {
+const UserProductBlock = ({cartDetail, removeItem}) => {
 
   const renderImage = (images) => {
     if(images.length > 0){
@@ -12,9 +12,9 @@ const UserProductBlock = ({products, removeItem}) => {
 
 
   const renderItems = () => (
-    products.cartDetail ?
-      products.cartDetail.map(product=>(
-        <div className="user_product_block" key={product._id}>
+    cartDetail ?
+      cartDetail.map(product=>(
+        <div className="user_product_block items-center" key={product._id}>
           <div className="item">
             <div
               className="image"
@@ -36,7 +36,7 @@ const UserProductBlock = ({products, removeItem}) => {
           <div className="item">
             <h4>Price</h4>
             <div>
-                           $ {product.price}
+              $ {product.price}
             </div>
           </div>
           <div className="item btn">

@@ -21,6 +21,10 @@ router.get('/acrticles-by-id', (req, res) => {
 	const type = req.query.type;
 	let items = req.query.id;
 
+	if (!req.query.id) {
+		return res.json([]);
+	}
+
 	if (type === 'array') {
 		const ids = items.split(',');
 		items = [];
@@ -34,7 +38,7 @@ router.get('/acrticles-by-id', (req, res) => {
 		.populate('brand')
 		.populate('wood')
 		.exec((err, products) => {
-			if (err) res.status(500).send(err);
+			if (err) res.status(500).send([]);
       
 			res.status(200).json(products);
 		});
