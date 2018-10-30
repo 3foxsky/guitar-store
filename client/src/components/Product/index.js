@@ -28,7 +28,7 @@ class ProductPage extends Component {
   render() {
     const { match, products, user, history } = this.props;
     return (
-      <div className="px-5 md:px-0">
+      <div className="px-5 lg:px-0">
         <div className="page_top">
           <div className="container">
             Product Detail
@@ -37,16 +37,11 @@ class ProductPage extends Component {
         <div className="container">
           {
             products.prodDetail ?
-              <div className="product_detail_wrapper flex-col md:flex-row">
-                <div className="left">
-                  <div style={{
-                    maxWidth:'500px',
-                    minWidth: '250px'
-                  }}>
-                    <ProdImg
-                      detail={products.prodDetail}
-                    />
-                  </div>
+              <div className="product_detail_wrapper flex-col lg:flex-row">
+                <div className="left w-full">
+                  <ProdImg
+                    detail={products.prodDetail}
+                  />
                 </div>
                 <div className="right">
                   <ProdInfo

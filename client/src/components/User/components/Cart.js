@@ -27,13 +27,6 @@ class UserCart extends Component {
       this.props.getCartItems();
     }
 
-    // shouldComponentUpdate (nextProps) {
-    //   if (nextProps.cartLength !== this.props.cartLength) {
-    //     return true;
-    //   }
-    //   return false;
-    // }
-
     removeFromCart = (id) => {
       this.props.removeFromCart(id);
     }

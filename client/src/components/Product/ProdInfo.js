@@ -22,7 +22,7 @@ const ProdNfo = (props) => {
         :null
       }
       { detail.available ?
-        <div className="tag">
+        <div className="tag text-green">
           <div><FontAwesomeIcon icon={faCheck}/></div>
           <div className="tag_text">
             <div>Available</div>
@@ -71,8 +71,8 @@ const ProdNfo = (props) => {
   const detail = props.detail;
   return (
     <div>
-      <h1>{detail.brand.name} {detail.name}</h1>
-      <p>
+      <h1 className="mt-6">{detail.brand.name} {detail.name}</h1>
+      <p className="py-6">
         {detail.description}
       </p>
       { showProdTags(detail)}

@@ -15,14 +15,25 @@ class AuthRoute extends Component {
 
   componentDidMount() {
     const history = createHistory();
+
     this.unlisten = this.props.history.listen((location, action) => {
       this.props.auth();
+      this.setState({
+        from: this.props.location.pathname
+      });
     });
     this.props.auth();
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    const {from} = this.state;
+    if (prevProps.isAuth == false && this.props.isAuth === true) {
+      this.props.history.push(from);
+    }  
+  }
   
   render() {
-    const { component: Component, user, privateRoute, loading, ...rest } = this.props;
+    const { component: Component, isAuth, privateRoute, loading, ...rest } = this.props;
     return (
       <React.Fragment>
         {loading ?
@@ -31,7 +42,7 @@ class AuthRoute extends Component {
           <Route
             {...rest}
             render={props =>
-              !privateRoute || user.userData.isAuth ? (
+              !privateRoute || isAuth ? (
                 <Component {...props} />
               ) : (
                 <Redirect
@@ -51,7 +62,7 @@ class AuthRoute extends Component {
 export default withRouter(connect(
   ({user}) => ({
     loading: user.isLoading,
-    user, 
+    isAuth: user.userData.isAuth, 
   }),
   {auth}
 )

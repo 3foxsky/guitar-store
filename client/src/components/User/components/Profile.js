@@ -70,7 +70,7 @@ class ProfileInfo extends Component {
               </div>
               : null} */}
             <button type="submit" onClick={handleSubmit}>
-                           Update personal info
+              Update personal info
             </button>
           </div>
 
@@ -85,7 +85,7 @@ const HOC = withFormik({
     return {   
       email: user.userData.email,
       firstName: user.userData.firstName,
-      lastname: user.userData.lastname,
+      lastName: user.userData.lastName,
     };},
   validate: values => {
     const errors = {};
@@ -98,14 +98,14 @@ const HOC = withFormik({
     if (!values.firstName.trim()) {
       errors.firstName = 'Required';
     }
-    if (!values.lastname.trim()) {
-      errors.lastname = 'Required';
+    if (!values.lastName.trim()) {
+      errors.lastName = 'Required';
     }
     return errors;
   },
 
   handleSubmit: ({email, password}, {props, props: {location, history}, setValues}) => {
-
+    
   },
   validateOnChange: false,
   displayName: 'UpdateForm',

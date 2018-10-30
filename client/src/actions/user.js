@@ -65,6 +65,7 @@ export const auth = () => async (dispatch, getStore) => {
       type: T.AUTH_SUCCESS,
       payload: res.data
     });
+    
   } catch (e) {
     dispatch({
       type: T.AUTH_FAILURE,
@@ -122,10 +123,10 @@ export const getCartItems = () => (dispatch, getStore) => {
 
   axios.get(`${r.products}/acrticles-by-id?id=${cartItemIds}&type=array`)
     .then(res => {
-      cart.map(item => {
-        res.data.map((k,i) => {
-          if(item.id === k._id){
-            res.data[i].quantity = item.quantity;
+      cart.map(i => {
+        res.data.map((k, idx) => {
+          if(i.id === k._id){
+            res.data[idx].quantity = i.quantity;
           }
         });
       });
@@ -143,9 +144,10 @@ export const addToCart = (id) => (dispatch, getStore) => {
   const { isAuth } = getStore().user.userData;
 
   // if (isAuth) {
+  const isExisst = cart.find(i => i.id === id);
   const prodIdx = cart.findIndex(i => i.id === id);
   // cause -1 == true
-  if (!prodIdx) {
+  if (isExisst) {
     cart[prodIdx].quantity += 1;
   } else {
     cart.push({

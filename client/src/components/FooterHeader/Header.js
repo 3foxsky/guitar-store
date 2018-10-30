@@ -3,6 +3,7 @@ import { Link, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { logoutUser } from '../../actions/user';
+import { getCartLenght } from '../../selectors';
 
 class Header extends Component {
   constructor(props) {
@@ -67,12 +68,12 @@ class Header extends Component {
   }
 
   renderPrivateLink = (i, idx) => {
-    const { user } = this.props;
+    const { cartLength } = this.props;
     switch (i.type) {
     case 'cartLink':
       return (
         <div className="cart_link" key={idx}>
-          <span>{user.userData.cart.length || 0}</span>
+          <span>{cartLength || 0}</span>
           <Link to={i.linkTo}>
             {i.name}
           </Link>
@@ -142,8 +143,9 @@ class Header extends Component {
 }
 
 export default connect(
-  ({user}) => ({
-    user,
+  (state) => ({
+    user: state.user,
+    cartLength: getCartLenght(state),
   }),
   {
     logoutUser

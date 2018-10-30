@@ -9,7 +9,8 @@ const initialState = {
     isLoading: false,
   },
   userData: {
-    isAuth: false
+    isAuth: false,
+    cart: [],
   },
   cartDetail: [],
 };
