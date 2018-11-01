@@ -1,7 +1,7 @@
 # guitar-store
 Full list of technologies
   Front-end:
-Markup: * React
+Markup : * React
         * Redux
         * Redux-thunk
         * React router v4
@@ -11,7 +11,7 @@ Markup: * React
         * material-ui
         * ramda (few times)
   Back-end:
-    Markup: * Express.js
+ Markup : * Express.js
             * MongoDB (Mongoose)
             * JWT
   
