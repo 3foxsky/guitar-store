@@ -12,7 +12,7 @@ Front-end:  | Back-end:
  material-ui |
  ramda (few times) |
   Front-end:
-Markup : * React
+ * React
         * Redux
         * Redux-thunk
         * React router v4
@@ -22,7 +22,7 @@ Markup : * React
         * material-ui
         * ramda (few times)
   Back-end:
- Markup : * Express.js
+ * Express.js
             * MongoDB (Mongoose)
             * JWT
   
