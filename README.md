@@ -13,7 +13,6 @@ Front-end:
  * ramda (few times)
  <br/>
 Back-end:
-<br/>
  * Express.js
  * MongoDB (Mongoose)
  * JWT
