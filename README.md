@@ -1,6 +1,6 @@
 # guitar-store
-Full list of technologies
-Front-end:
+Full list of technologies . 
+Front-end:    
  * React
  * Redux
  * Redux-thunk
@@ -10,7 +10,7 @@ Front-end:
  * react-slick
  * material-ui
  * ramda (few times)
-Back-end:
+Back-end:  
  * Express.js
  * MongoDB (Mongoose)
  * JWT
