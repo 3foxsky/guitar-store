@@ -38,7 +38,7 @@ class ProductPage extends Component {
           {
             products.prodDetail ?
               <div className="product_detail_wrapper flex-col lg:flex-row">
-                <div className="left w-full">
+                <div className="left w-full lg:mr-10">
                   <ProdImg
                     detail={products.prodDetail}
                   />

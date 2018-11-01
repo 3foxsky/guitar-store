@@ -16,7 +16,7 @@ export const calculateTotal = createSelector(
   )
 );
 
-export const getCartLenght = createSelector(
+export const getCartLength = createSelector(
   cart,
   cart => (
     cart.reduce((acc, curr) => acc + parseInt(curr.quantity), 0)

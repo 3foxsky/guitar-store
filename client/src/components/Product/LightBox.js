@@ -12,7 +12,7 @@ class ImageLightBox extends Component {
     static getDerivedStateFromProps(props,state){
       if(props.images){
         const images = [];
-        props.images.forEach(element=>{
+        props.images.map(element=>{
           images.push({src:`${element}`});
         });
         return state = {

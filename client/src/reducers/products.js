@@ -4,7 +4,11 @@ const initialState = {
   isShopLoading: false,
   toShop: [],
   bySell: [],
-  byArrival: []
+  byArrival: [],
+  upload: {
+    isLoading: false,
+    signedUrl: null,
+  }
 };
 
 export default (state = initialState, {type, payload}) => {
@@ -83,6 +87,14 @@ export default (state = initialState, {type, payload}) => {
     return {
       ...state,
       prodDetail: payload
+    };
+  case T.UPLOAD_START:
+    return {
+      ...state,
+      upload: {
+        ...state.upload,
+        isLoading: true
+      }
     };
   default:
     return state;

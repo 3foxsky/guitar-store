@@ -14,6 +14,8 @@ import ProductPage from './components/Product';
 // user
 import User from './components/User';
 
+import Upload from './components/Upload';
+
 export default class App extends Component {
   render() {
     return (
@@ -27,7 +29,7 @@ export default class App extends Component {
               {/* <AuthRoute path="/admin/manage-categories" privateRoute={true} />
               <AuthRoute path="/admin/add-product" privateRoute={true} />
               <AuthRoute path="/admin/site-info" privateRoute={true} /> */}
-
+              <AuthRoute path="/upload" component={Upload} privateRoute={false}/>
               <AuthRoute path="/" exact component={HomeContainer} privateRoute={false} />
               <AuthRoute path="/login"  component={Login} privateRoute={false} />
               <AuthRoute path="/register" component={Register} privateRoute={false} />

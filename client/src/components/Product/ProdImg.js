@@ -71,7 +71,7 @@ class ProdImg extends Component {
         <div className="product_image_container">
           <div className="main_pic">
             <div
-              className="prod-detail_main-pic lg:mr-10"
+              className="prod-detail_main-pic"
               style={{background:`url(${this.renderCardImage(detail.images)}) no-repeat`}} 
               onClick={()=> this.handleLightBox(0)}
             >

@@ -6,6 +6,59 @@ import { getProductsLength } from '../selectors';
 
 //! add FAILURE actinos instead of them absence or logs
 
+/*************************
+********** IMAGE UPLOAD
+**************************/
+
+
+export const uploadImage = file => async dispatch => {
+  dispatch({type: T.UPLOAD_START});
+
+  axios.get('/api/upload')
+    .then( res => {
+      return axios.put('/api/upload', file, {
+        headers: {
+          'Content-Type': file.type
+        }
+      });
+    })
+    .then( res => {
+      // ! add product id
+      return axios.put('/api/products/5b2d4b70e4b4a1d22d374f8b', {url: res.data.url });
+    })
+    .then( res => {
+      dispatch({
+        type: T.UPLOAD_SUCCESS,
+        payload: res.data.success
+      });
+    })
+    .catch(e => {
+      dispatch({
+        type: T.UPLOAD_FAILURE,
+        error: e,
+        message: 'Sorry can\'t upload your file'
+      });
+    });
+  // try {
+  //   const res = await axios.get('/api/upload');
+
+  //   dispatch({
+  //     type: T.UPLOAD_SUCCESS,
+  //     payload: {}
+  //   });
+  // } catch (e) {
+  //   dispatch({
+  //     type: T.UPLOAD_FAILURE,
+  //     error: e,
+  //     message: 'Sorry can\'t upload your file'
+  //   });
+  // }
+};
+
+/*************************
+********** PROODUCTS FETCHING
+**************************/
+
 export const getProductsToShop = (skip, limit, filters =[], previousState = []) => async dispatch => {
   const settings = {
     limit,

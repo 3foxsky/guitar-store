@@ -12,6 +12,10 @@ export const AUTH_START = 'AUTH_START';
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const AUTH_FAILURE = 'AUTH_FAILURE';
 
+export const UPLOAD_START = 'UPLOAD_START';
+export const UPLOAD_SUCCESS = 'UPLOAD_SUCCESS';
+export const UPLOAD_FAILURE = 'UPLOAD_FAILURE';
+
 export const GET_CART_ITEMS_USER = 'GET_CART_ITEMS_USER';
 export const ADD_TO_CART_USER = 'ADD_TO_CART_USER';
 export const UPDATE_CART = 'UPDATE_CART';

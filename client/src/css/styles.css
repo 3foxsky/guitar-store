@@ -4,6 +4,9 @@ body {
     font-family: 'Oswald', sans-serif;
     color: #404040;
 }
+button:focus {
+    outline: none;
+}
 
 html, body, #root, #wrapper {
     height: 100%;

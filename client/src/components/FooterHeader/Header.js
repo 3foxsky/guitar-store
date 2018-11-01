@@ -3,7 +3,7 @@ import { Link, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { logoutUser } from '../../actions/user';
-import { getCartLenght } from '../../selectors';
+import { getCartLength } from '../../selectors';
 
 class Header extends Component {
   constructor(props) {
@@ -145,7 +145,7 @@ class Header extends Component {
 export default connect(
   (state) => ({
     user: state.user,
-    cartLength: getCartLenght(state),
+    cartLength: getCartLength(state),
   }),
   {
     logoutUser

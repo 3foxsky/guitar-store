@@ -57,7 +57,10 @@ export default (state = initialState, {type, payload}) => {
   case T.AUTH_SUCCESS:
     return{
       ...state, 
-      userData: payload,
+      userData: {
+        ...state.userData,
+        ...payload
+      },
       isLoading: false,
     };
   case T.AUTH_FAILURE:

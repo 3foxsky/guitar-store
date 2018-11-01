@@ -25,6 +25,8 @@ const HomeSlider = (props) => {
     dots: false,
     infinite: true,
     speed: 500,
+    autoplay: true,
+    autoplaySpeed: 1500,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false
@@ -44,7 +46,6 @@ const HomeSlider = (props) => {
               <div className="tag title">{item.lineOne}</div>
               <div className="tag low_title">{item.lineTwo}</div>
               <div>
-                //! UPDTATE BUTTON
                 <Button
                   type="default"
                   title={item.linkTitle}

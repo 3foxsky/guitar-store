@@ -1,5 +1,5 @@
 {
-  "name": "guitar-store",
+  "name": "korshak-guitar-store",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,12 +13,13 @@
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "engines": {
-    "node": "8.11.3"
+    "node": "9.0.0"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@babel/runtime": "^7.0.0",
+    "aws-sdk": "^2.345.0",
     "bcrypt": "^3.0.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "1.18.3",
@@ -35,7 +36,8 @@
     "multer": "1.3.0",
     "nodemailer": "4.6.7",
     "passport-jwt": "^4.0.0",
-    "ramda": "^0.25.0"
+    "ramda": "^0.25.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "eslint": "^5.7.0",
